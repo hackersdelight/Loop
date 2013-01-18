@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Loop.Interfaces;
+using Loop.DatabaseConnection;
 
 namespace LoopUI.Controllers
 {
 	internal class DataStrorage:IDataStorage
 	{
 		private DataStrorage()
-		{}
+		{
+			connection = new ConnectToMsSql();
+		}
+
+		private ConnectToMsSql connection;
 
 		private static DataStrorage instance;
 
@@ -27,6 +32,9 @@ namespace LoopUI.Controllers
 
 		public void AddRisk(IRisk risk)
 		{
+			connection.OpenConnection();
+			//query execution is here;
+			connection.CloseConnection();
 			throw new NotImplementedException();
 		}
 
