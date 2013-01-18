@@ -1,0 +1,22 @@
+﻿@model Models.User
+<div id="message">
+	<b>@ViewBag.Message</b>
+</div>
+@using (Html.BeginForm("Index", "Login", FormMethod.Post, new {@onsubmit = "SetLoader();"}))
+{
+<div class="block">
+	<label>User name:</label>
+	@Html.TextBoxFor(x => x.Login)
+</div>
+<div class="block">
+	<label>Password:</label>
+	@Html.PasswordFor(x => x.Password)
+</div>
+<div>
+@{
+	Html.RenderPartial("Captcha");
+}
+</div>
+<img src="@Url.Content("~/Content/images/loader.gif")" class="loader"/>
+<input type="submit" id="submit" value="Enter" />
+}

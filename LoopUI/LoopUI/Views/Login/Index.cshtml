@@ -1,7 +1,7 @@
 ﻿@{
-    ViewBag.Title = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "Login";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>header 1</h1>
-<h2>header 2</h2>
-<p>paragraph</p>
+@{
+	Html.RenderPartial("Login");
+}

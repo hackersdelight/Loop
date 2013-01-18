@@ -402,3 +402,46 @@ img.aligncenter {
 	margin-bottom: 30px;
 }
 
+.loader
+{
+	display: none;
+}
+
+div.block{
+	overflow:hidden;
+}
+div.block label{
+	width:160px;
+	display:block;
+	float:left;
+	text-align:left;
+}
+div.block .input{
+	margin-left:4px;
+	float:left;
+}
+
+div.block .a{
+	width:160px;
+	display:block;
+	float:left;
+	text-align:left;
+}
+
+input[type="submit"]
+{
+	text-transform:uppercase;
+	height: 36px;
+	width: 100px;
+	color: #ffffff;
+	letter-spacing: 1px;
+	padding: 10 20px;
+	font-family:'Oswald', Sans-Serif;
+	font-size:14px;
+	font-weight:normal;
+	text-decoration:none;
+	text-align:center;
+	border:none;
+	border-width:medium;
+	background-color: #262626;
+}

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Loop.Interfaces;
 
-namespace LoopUI.Models
+namespace Models
 {
 	public class User: IUser
 	{
