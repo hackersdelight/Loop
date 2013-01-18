@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Loop.Core.Interfaces;
+using Loop.Interfaces;
 
-namespace Loop.Core
+namespace Loop
 {
-	public class Loop
+	public class Core
 	{
 		private IDataStorage storage;
-		private Loop()
+		private Core()
 		{ }
 
-		public Loop(IDataStorage dataStorage)
+		public Core(IDataStorage dataStorage)
 		{
 			storage = dataStorage;
 		}

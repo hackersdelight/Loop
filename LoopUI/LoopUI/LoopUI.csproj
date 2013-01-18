@@ -65,6 +65,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Core\CoreWrapper.cs" />
+    <Compile Include="Controllers\Core\DataProvider.cs" />
+    <Compile Include="Controllers\Core\DataStrorage.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

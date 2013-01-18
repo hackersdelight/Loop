@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Loop.Core.Interfaces;
+using Loop.Interfaces;
 
 namespace LoopUI.Models
 {
@@ -68,7 +68,7 @@ namespace LoopUI.Models
 			set;
 		}
 
-		public Loop.Core.TaskType Type
+		public Loop.TaskType Type
 		{
 			get;
 			set;

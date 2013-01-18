@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Loop.Core.Interfaces
+namespace Loop.Interfaces
 {
 	public interface ISprint
 	{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Loop.Core.Interfaces
+namespace Loop.Interfaces
 {
 	public interface ITask
 	{
@@ -20,7 +20,7 @@ namespace Loop.Core.Interfaces
 		List<string> Comments { get; }
 	}
 }
-namespace Loop.Core
+namespace Loop
 {
 	public enum TaskType
 	{
