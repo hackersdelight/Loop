@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using LoopUI.Controllers;
 
 namespace Loop.DatabaseConnection
 {
@@ -39,7 +40,7 @@ namespace Loop.DatabaseConnection
 			}
 			else
 			{
-				throw new Exception("Warning: connection is already opened.");
+				Logger.Instance.WriteToLog("Warning: connection is already opened.");
 			}
 			return connectionIsOpen;
 		}
@@ -54,7 +55,7 @@ namespace Loop.DatabaseConnection
 			}
 			else
 			{
-				throw new Exception("Warning: connection is already opened.");
+				Logger.Instance.WriteToLog("Warning: connection is already opened.");
 			}
 			return connectionIsOpen;
 		}
@@ -72,7 +73,7 @@ namespace Loop.DatabaseConnection
 			}
 			else
 			{
-				throw new Exception("Error: there is no open connection."); ;
+				Logger.Instance.WriteToLog("Error: there is no open connection."); ;
 			}
 		}
 
@@ -99,12 +100,12 @@ namespace Loop.DatabaseConnection
 				}
 				else
 				{
-					throw new Exception("Error in command arguments.");
+					Logger.Instance.WriteToLog("Error in command arguments.");
 				}
 			}
 			else
 			{
-				throw new Exception("Error: connection was not opened.");
+				Logger.Instance.WriteToLog("Error: connection was not opened.");
 			}
 		}
 
@@ -134,13 +135,14 @@ namespace Loop.DatabaseConnection
 				}
 				else
 				{
-					throw new Exception("Error in command arguments.");
+					Logger.Instance.WriteToLog("Error in command arguments.");
 				}
 			}
 			else
 			{
-				throw new Exception("Error: connection was not opened.");
+				Logger.Instance.WriteToLog("Error: connection was not opened.");
 			}
+			return null;
 		}
 
 		public void BeginTransaction()
@@ -154,12 +156,12 @@ namespace Loop.DatabaseConnection
 				}
 				else
 				{
-					throw new Exception("Error: transaction is already began.");
+					Logger.Instance.WriteToLog("Error: transaction is already began.");
 				}
 			}
 			else
 			{
-				throw new Exception("Error: connection was not opened.");
+				Logger.Instance.WriteToLog("Error: connection was not opened.");
 			}
 		}
 
@@ -174,12 +176,12 @@ namespace Loop.DatabaseConnection
 				}
 				else
 				{
-					throw new Exception("Error: there is no active transaction.");
+					Logger.Instance.WriteToLog("Error: there is no active transaction.");
 				}
 			}
 			else
 			{
-				throw new Exception("Error: connection was not opened.");
+				Logger.Instance.WriteToLog("Error: connection was not opened.");
 			}
 		}
 
@@ -194,12 +196,12 @@ namespace Loop.DatabaseConnection
 				}
 				else
 				{
-					throw new Exception("Error: there is no active transaction.");
+					Logger.Instance.WriteToLog("Error: there is no active transaction.");
 				}
 			}
 			else
 			{
-				throw new Exception("Error: connection was not opened.");
+				Logger.Instance.WriteToLog("Error: connection was not opened.");
 			}
 		}
 	}

@@ -45,7 +45,7 @@
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Loop.cs" />
     <Compile Include="Interfaces\IDataStorage.cs" />
-    <Compile Include="Interfaces\IExport.cs" />
+    <Compile Include="Interfaces\IDataExporter.cs" />
     <Compile Include="Interfaces\IDataProvider.cs" />
     <Compile Include="Interfaces\ITask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

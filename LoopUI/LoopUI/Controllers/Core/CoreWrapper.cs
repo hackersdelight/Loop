@@ -9,21 +9,32 @@ namespace LoopUI.Controllers
 {
 	internal class CoreWrapper
 	{
+		private Core core;
+		private static CoreWrapper instance;
+
 		private CoreWrapper()
 		{ }
 
-		private static Core instance;
+		private CoreWrapper(Core c)
+		{
+			core = c;
+		}
 
-		internal static Core Instance 
+		internal static CoreWrapper Instance 
 		{
 			get
 			{
 				if (instance == null)
 				{
-					instance = new Core(DataStrorage.Instance);
+					instance = new CoreWrapper(new Core(DataStrorage.Instance));
 				}
 				return instance;
 			}
+		}
+
+		internal bool UserExists(string login)
+		{
+			return DataStrorage.Instance.UserExists(login);
 		}
 	}
 }

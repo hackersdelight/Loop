@@ -132,5 +132,23 @@ namespace LoopUI.Controllers
 		{
 			throw new NotImplementedException();
 		}
+
+		internal bool UserExists(string login)
+		{
+			try
+			{
+				connection.OpenConnection();
+				return false;
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				return false;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
+		}
 	}
 }

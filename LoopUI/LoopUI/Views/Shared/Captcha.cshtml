@@ -1,13 +1,10 @@
 ﻿@using Models
 @{
 	Captcha captcha = new Captcha();
-	@Html.ValidationMessageFor(x => captcha, "", new { @class = "error", @style = "margin-top:25px;" })
-	<br />
 	<p>Solve:</p>
-	<div class="block">
-		<a href="@Url.Action("Index", "Login")">
-			<img alt="Captcha" src="@Url.Action("CaptchaImage", "Captcha")" style="" />
-		</a>
-		@Html.TextBoxFor(x => captcha.CaptchaResult, new { @class = "text" })
-	</div>
+	<label>
+		<img alt="Captcha" src="@Url.Action("CaptchaImage", "Captcha")" />
+	</label> 
+	@Html.TextBoxFor(x => captcha.CaptchaResult)
+	@Html.ValidationMessage("Captcha")
 }

@@ -419,13 +419,7 @@ div.block label{
 div.block .input{
 	margin-left:4px;
 	float:left;
-}
-
-div.block .a{
-	width:160px;
-	display:block;
-	float:left;
-	text-align:left;
+	width: 100px;
 }
 
 input[type="submit"]
@@ -444,4 +438,12 @@ input[type="submit"]
 	border:none;
 	border-width:medium;
 	background-color: #262626;
+}
+
+input[type="submit"]:hover {
+	background: #2483A6;
+	text-decoration: none;
+	color: #262626;
+	border-color: #262626;
+	border: 2px;
 }
