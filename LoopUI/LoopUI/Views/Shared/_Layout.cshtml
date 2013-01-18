@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Loop</title>
+<link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css" />
+<link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+<link href="@Url.Content("~/Content/styles/style.css")" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body>
+<div id="wrapper">
+	<div id="page">
+		<div id="page-bgtop">
+			<div id="page-bgbtm">
+				<div id="page-content">
+					<div id="header-wrapper">
+						<div id="header">
+							<div id="logo">
+								<h1><a href="#">Loop</a></h1>
+								<p>Optimized resource allocation system for Agile development.</p>
+							</div>
+						</div>
+					</div>
+					<!-- end #header -->
+					<div id="menu-wrapper">
+						<div id="menu">
+							<ul>
+								<!-- Main menu will be here -->
+								<li class="current_page_item"><a href="#">Homepage</a></li>
+								<li><a href="#">Users</a></li>
+								<li><a href="#">Sprints</a></li>
+								<li><a href="#">Tasks</a></li>
+								<li><a href="#">Metrics</a></li>
+								<li><a href="#">Manual</a></li>
+								<li><a href="#">Feedback</a></li>
+							</ul>
+						</div>
+					</div>
+					<!-- end #menu -->
+					<div id="banner"><img src="@Url.Content("~/Content/images/img05.png")" width="940" height="300" alt="" /></div>
+					<div id="content">
+						<div class="post">
+						<!-- Page title will be here -->
+							<h2 class="title"><a href="#">@ViewBag.Title</a></h2>
+						<!-- Main content will be here -->
+							<div class="entry">
+								@RenderBody()
+							</div>
+						</div>
+						<div style="clear: both;">&nbsp;</div>
+					</div>
+					<!-- end #content -->
+					<div id="sidebar">
+						<div>
+						<h2>Sidebar</h2>
+						<ul class="list-style1">
+							<li class="first"><a href="#">First action</a></li>
+							<li><a href="#">Second action</a></li>
+						</ul>
+					</div>
+					</div>
+					<!-- end #sidebar -->
+				</div>
+				<div style="clear: both;">&nbsp;</div>
+			</div>
+		</div>
+	</div>
+	<!-- end #page -->
+</div>
+<div id="footer">
+	<p>© 2012 Alexandra Panarina. All rights reserved. Design by <a href="http://www.freecsstemplates.org">FCT</a>.  Photos by <a href="http://fotogrph.com/">Fotogrph</a>.</p>
+</div>
+<!-- end #footer -->
+</body>
+</html>
