@@ -7,5 +7,7 @@ namespace Loop.Core.Interfaces
 {
 	public interface ISprint
 	{
+		int Id { get; }
+		string KeyedName { get; }
 	}
 }
