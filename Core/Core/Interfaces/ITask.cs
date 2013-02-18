@@ -10,7 +10,8 @@ namespace Loop.Interfaces
 		int Id { get; }
 		string Number { get;}
 		string Title { get;}
-		TaskType Type { get;}
+		//Planning, Required, Fixed etc
+		ITaskStatus Status { get; }
 		string Description { get; }
 		string Steps { get; }
 		string Background { get; }
@@ -19,12 +20,10 @@ namespace Loop.Interfaces
 		int Estimation { get; }
 		List<string> Comments { get; }
 	}
-}
-namespace Loop
-{
-	public enum TaskType
+
+	public interface IRegression : ITask
 	{
-		Bug,
-		Regression
+		//the task which caused the regression
+		ITask ParentTask { get; }
 	}
 }

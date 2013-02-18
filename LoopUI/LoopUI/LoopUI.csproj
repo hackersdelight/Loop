@@ -34,7 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Core">
+    <Reference Include="Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Core\Core\bin\Debug\Core.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.Entity" />
@@ -64,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TaskController.cs" />
     <Compile Include="Areas\Client\ClientAreaRegistration.cs" />
     <Compile Include="Areas\Client\Controllers\HomeController.cs" />
     <Compile Include="Areas\User\Controllers\HomeController.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Models\Captcha.cs" />
     <Compile Include="Models\Risk.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\TaskStatus.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,9 +165,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\Captcha.cshtml" />
-    <Content Include="Views\Shared\HeaderLinks.cshtml" />
-    <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\Shared\PartialViews\Captcha.cshtml" />
+    <Content Include="Views\Shared\PartialViews\HeaderLinks.cshtml" />
+    <Content Include="Views\Shared\PartialViews\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -174,7 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Client\Models\" />
     <Folder Include="Areas\Client\Views\Shared\" />
     <Folder Include="Areas\User\Models\" />
@@ -197,6 +199,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\User\Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Task\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

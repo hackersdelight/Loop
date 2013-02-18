@@ -68,7 +68,8 @@ namespace Models
 			set;
 		}
 
-		public Loop.TaskType Type
+
+		public ITaskStatus Status
 		{
 			get;
 			set;
