@@ -1,0 +1,11 @@
+﻿@{
+		Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section menu
+{
+<!--client may view only metrics (prognoses when the sprint will be finished)-->
+	<li id="Metrics">@Html.ActionLink("Metrics", "Index", "Metrics")</li>
+}
+
+@RenderBody()

@@ -17,7 +17,7 @@ namespace LoopUI.Areas.Client
 			context.MapRoute(
 					"Client_default",
 					"Client/{controller}/{action}/{id}",
-					new {controller = "Home", action = "Index", id = UrlParameter.Optional }
+					new {controller = "Manual", action = "Index", id = UrlParameter.Optional }
 			);
 		}
 	}

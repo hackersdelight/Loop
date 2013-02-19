@@ -1,0 +1,13 @@
+﻿@{
+		Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section menu
+{
+<!--user is the developer who works on issue, s/he may view Tasks, Metrics and sprints-->
+	<li id="Sprint">@Html.ActionLink("Sprints", "Index", "Sprint")</li>
+	<li id="Task">@Html.ActionLink("Tasks", "Index", "Task")</li>
+	<li id="Metrics">@Html.ActionLink("Metrics", "Index", "Metrics")</li>
+}
+
+@RenderBody()
