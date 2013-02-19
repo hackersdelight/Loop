@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Models
+namespace LoopUI.Models
 {
 	public class Captcha
 	{

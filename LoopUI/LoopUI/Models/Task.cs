@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Loop.Interfaces;
 
-namespace Models
+namespace LoopUI.Models
 {
 	public class Task: ITask
 	{

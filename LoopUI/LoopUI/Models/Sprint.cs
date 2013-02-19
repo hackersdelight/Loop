@@ -6,7 +6,7 @@ using Loop.Interfaces;
 
 namespace LoopUI.Models
 {
-	public class Risk: IRisk
+	public class Sprint : ISprint
 	{
 		public int Id
 		{
@@ -14,7 +14,7 @@ namespace LoopUI.Models
 			set;
 		}
 
-		public string Title
+		public string KeyedName
 		{
 			get;
 			set;

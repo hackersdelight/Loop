@@ -10,11 +10,8 @@
 	}
 	<script type="text/javascript">
 		$(document).ready(function () {
-			$("#menu ul li").bind('click', function () {
-				//select li where a called
-				$("#menu ul li.current_page_item").removeClass("current_page_item");
-				$(this).addClass("current_page_item");
-			});
+			var selected = '@ViewContext.RouteData.Values["Controller"]';
+			$("#" + selected).addClass("current_page_item");
 		});
 	</script>
 </head>
@@ -39,10 +36,10 @@
 							<div id="menu">
 								<ul>
 									<!-- Main menu will be here -->
-									<li class="current_page_item">@Html.ActionLink("Homepage", "Index", "Home")</li>
+									<li id="Home">@Html.ActionLink("Homepage", "Index", "Home")</li>
 									@RenderSection("menu", false)
-									<li>@Html.ActionLink("Manual", "Index", "Manual")</li>
-									<li>@Html.ActionLink("Feedback", "Index", "Feedback")</li>
+									<li id="Manual">@Html.ActionLink("Manual", "Index", "Manual")</li>
+									<li id="Feedback">@Html.ActionLink("Feedback", "Index", "Feedback")</li>
 								</ul>
 							</div>
 						</div>
