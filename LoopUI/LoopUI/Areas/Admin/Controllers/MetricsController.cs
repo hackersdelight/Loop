@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace LoopUI.Areas.Admin.Controllers
 {
-	public class MetricsController : Controller
+	public class MetricsController : BaseController
 	{
 		//
 		// GET: /Admin/Metrics/

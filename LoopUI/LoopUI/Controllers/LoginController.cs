@@ -4,10 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using LoopUI.Models;
+using System.Web.Security;
 
 namespace LoopUI.Controllers
 {
-	public class LoginController : Controller
+	public class LoginController : BaseController
 	{
 		//
 		// GET: /Login/
@@ -29,9 +30,17 @@ namespace LoopUI.Controllers
 			//check user here!
 			//if (CoreWrapper.Instance.UserExists(user.Login))
 			//{
-				return RedirectToAction("Index", "Admin");
+			FormsAuthentication.SetAuthCookie(user.Login, true);
+			return RedirectToAction("Index", "Admin");
 			//}
 			//return View();
+		}
+
+		public ActionResult Logout()
+		{
+			Session.Clear();
+			FormsAuthentication.SignOut();
+			return RedirectToAction("Index", "Login");
 		}
 	}
 }

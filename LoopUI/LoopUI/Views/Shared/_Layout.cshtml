@@ -24,7 +24,7 @@
 						<div id="header-wrapper">
 							<div id="header">
 								<div id="logo">
-								<h1><a href="#">Loop</a></h1>
+								<h1>@Html.ActionLink("Loop", "Logout", new { area = "", controller ="Login" })</h1>
 								<p>Optimized resource allocation system for Agile development.</p>
 								</div>
 							</div>
@@ -35,8 +35,19 @@
 						<div id="menu-wrapper">
 							<div id="menu">
 								<ul>
+								<li id="Login">
 									<!-- Main menu will be here -->
-									<li id="Home">@Html.ActionLink("Homepage", "Index", "Home")</li>
+										@{
+												if (Request.IsAuthenticated)
+												{
+													@Html.ActionLink("Logout", "Logout", new { area = "", controller = "Login" });
+												}
+												else
+												{
+													@Html.ActionLink("Login", "Index", new { area = "", controller = "Login" });
+												}
+											}
+									</li>
 									@RenderSection("menu", false)
 									<li id="Manual">@Html.ActionLink("Manual", "Index", "Manual")</li>
 									<li id="Feedback">@Html.ActionLink("Feedback", "Index", "Feedback")</li>

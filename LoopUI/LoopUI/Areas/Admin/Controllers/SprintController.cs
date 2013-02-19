@@ -7,7 +7,7 @@ using LoopUI.Models;
 
 namespace LoopUI.Areas.Admin.Controllers
 {
-	public class SprintController : Controller
+	public class SprintController : BaseController
 	{
 		//
 		// GET: /Admin/Sprint/

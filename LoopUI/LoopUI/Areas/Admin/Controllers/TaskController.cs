@@ -7,7 +7,7 @@ using LoopUI.Models;
 
 namespace LoopUI.Areas.Admin.Controllers
 {
-	public class TaskController : Controller
+	public class TaskController : BaseController
 	{
 		//
 		// GET: /Admin/Task/

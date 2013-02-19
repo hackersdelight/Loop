@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using LoopUI.Models;
 
-namespace LoopUI.Areas.Admin.Controllers
+namespace LoopUI.Controllers
 {
-	public class RiskController : BaseController
+	public class ManualController : BaseController
 	{
 		//
-		// GET: /Admin/Risk/
+		// GET: /Manual/
 
 		public ActionResult Index()
 		{
-			return View(new List<Risk>());
+			return View();
 		}
 
 	}

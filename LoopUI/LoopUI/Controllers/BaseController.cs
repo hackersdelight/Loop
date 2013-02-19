@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace LoopUI.Controllers
+namespace LoopUI
 {
 	//[RequireHttps]
 	public class BaseController : Controller
