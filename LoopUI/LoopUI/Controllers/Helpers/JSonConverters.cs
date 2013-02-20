@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using LoopUI.Models;
+using Loop.Interfaces;
 
 namespace LoopUI.Helpers
 {
 	internal class JSonConverters
 	{
-		internal static object GetJSonForTasks(IEnumerable<Task> tasks, int page, int count, int pageCount)
+		internal static object GetJSonForTasks(IEnumerable<ITask> tasks, int page, int count, int pageCount)
 		{
 			var result = new
 			{
@@ -32,7 +33,7 @@ namespace LoopUI.Helpers
 			return result;
 		}
 
-		internal static object GetJSonForRisks(IEnumerable<Risk> risks, int page, int count, int pageCount)
+		internal static object GetJSonForRisks(IEnumerable<IRisk> risks, int page, int count, int pageCount)
 		{
 			var result = new
 			{
@@ -46,6 +47,48 @@ namespace LoopUI.Helpers
 					{
 							x.Title,
 							x.Type.Title
+					}
+				})
+			};
+			return result;
+		}
+
+		internal static object GetJSonForSprints(IEnumerable<ISprint> sprints, int page, int count, int pageCount)
+		{
+			var result = new
+			{
+				total = pageCount,
+				page,
+				records = count,
+				rows = sprints.Select(x => new
+				{
+					id = x.Id,
+					cell = new[]
+					{
+							x.KeyedName,
+							x.IsActive.ToString()
+					}
+				})
+			};
+			return result;
+		}
+
+		internal static object GetJSonForUsers(IEnumerable<IUser> users, int page, int count, int pageCount)
+		{
+			var result = new
+			{
+				total = pageCount,
+				page,
+				records = count,
+				rows = users.Select(x => new
+				{
+					id = x.Id,
+					cell = new[]
+					{
+							x.Name,
+							x.Surname,
+							x.Email,
+							x.IsActive.ToString()
 					}
 				})
 			};

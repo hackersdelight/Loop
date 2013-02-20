@@ -1,54 +1,50 @@
-﻿@model IEnumerable<LoopUI.Models.User>
-@{
+﻿@{
 	ViewBag.Title = "Users";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<p>
-	@Html.ActionLink("Create New", "Create")
-</p>
-<table>
-	<tr>
-		<th>
-			Email
-		</th>
-		<th>
-			Login
-		</th>
-		<th>
-			Name
-		</th>
-		<th>
-			Password
-		</th>
-		<th>
-			Surname
-		</th>
-		<th>
-		</th>
-	</tr>
-	@foreach (var item in Model)
- {
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Email)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Login)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Name)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Password)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Surname)
-			</td>
-			<td>
-				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-				@Html.ActionLink("Details", "Details", new { id = item.Id }) |
-				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-			</td>
-		</tr>
- }
+<table id="user" class="scroll" cellpadding="0" cellspacing="0">
 </table>
+<div id="userpager" class="scroll" style="text-align: center;">
+</div>
+@using Mvc.HtmlHelpers
+@(Html.jqGrid("user")
+		.addColumn(new Column("name").setLabel("Name")
+		.setSortable(true)
+		.setWidth(50))
+		.addColumn(new Column("surname").setLabel("Surname")
+		.setSortable(true)
+		.setWidth(50))
+		.addColumn(new Column("email").setLabel("Email")
+		.setSortable(true)
+		.setWidth(50))
+		.addColumn(new Column("isactive").setLabel("Active")
+		.setEditType(EditType.checkbox)
+		.setEditOptions("value: 'True:False'")
+		.setFormatter(Formatters.checkbox)
+		.setAlign(Align.center)
+		.setEditable(true)
+		.setWidth(20))
+		.addColumn(new Column("actions").setLabel("Actions")
+		.setSortable(false)
+		.setAlign(Align.left)
+		.setEditable(false)
+		.setWidth(80)
+		.setFormatter(Formatters.actions))
+
+		// settings
+		.setCaption("Users")
+		.setRequestType(RequestType.get)
+		.setUrl(Url.Action("GetUsers", "User"))
+		.setAltRows(true)
+		.setAltClass("altGridRows")
+		.setAutoWidth(true)
+		.setHeight(250)
+		.setRowNum(10)
+		.setRowList(new int[] { 10, 15, 20, 50 })
+		.setViewRecords(true)
+		.setPager("userpager")
+		.setPgButtons(true)
+		.setCellEdit(true)
+		.setCellSubmit(CellSubmit.clientArray)
+		.Render()
+)

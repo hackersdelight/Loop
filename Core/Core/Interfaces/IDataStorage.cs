@@ -24,11 +24,16 @@ namespace Loop.Interfaces
 		void EditUser(IUser user);
 		IUser GetUserById(int id);
 		List<IUser> GetAllUsers();
+		List<IUser> GetActiveUsers();
 
 		void AddSprint(ISprint sprint);
 		void DeleteSprint(ISprint sprint);
 		void EditSprint(ISprint sprint);
 		ISprint GetSprintById(int id);
 		List<ISprint> GetAllSprints();
+
+		List<ITaskPriority> GetAllTaskPriorities();
+		List<ITaskStatus> GetAllTaskStatuses();
+		List<IRiskType> GetAllRiskTypes();
 	}
 }

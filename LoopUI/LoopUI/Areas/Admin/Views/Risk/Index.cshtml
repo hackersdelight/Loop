@@ -1,30 +1,47 @@
-﻿@model IEnumerable<LoopUI.Models.Risk>
+﻿@model LoopUI.Models.EnumerationModel
 @{
 	ViewBag.Title = "Risks";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<p>
-	@Html.ActionLink("Create New", "Create")
-</p>
-<table>
-	<tr>
-		<th>
-			Title
-		</th>
-		<th>
-		</th>
-	</tr>
-	@foreach (var item in Model)
- {
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Title)
-			</td>
-			<td>
-				@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-				@Html.ActionLink("Details", "Details", new { id = item.Id }) |
-				@Html.ActionLink("Delete", "Delete", new { id = item.Id })
-			</td>
-		</tr>
- }
+<table id="risk" class="scroll" cellpadding="0" cellspacing="0">
 </table>
+<div id="riskpager" class="scroll" style="text-align: center;">
+</div>
+@using Mvc.HtmlHelpers
+@(Html.jqGrid("risk")
+		.addColumn(new Column("title").setLabel("Title")
+		.setSortable(true)
+		.setWidth(50))
+		.addColumn(new Column("type").setLabel("Type")
+		.setEditType(EditType.select)
+		.setEditOptions("value: $('#RiskType').val()")
+		.setEditRules("required: true")
+		.setEditable(true)
+		.setWidth(80))
+		.addColumn(new Column("actions").setLabel("Actions")
+		.setSortable(false)
+		.setAlign(Align.left)
+		.setEditable(false)
+		.setWidth(80)
+		.setFormatter(Formatters.actions))
+
+		// settings
+		.setCaption("Risks")
+		.setRequestType(RequestType.get)
+		.setUrl(Url.Action("GetRisks", "Risk"))
+		.setAltRows(true)
+		.setAltClass("altGridRows")
+		.setAutoWidth(true)
+		.setHeight(250)
+		.setRowNum(10)
+		.setRowList(new int[] { 10, 15, 20, 50 })
+		.setViewRecords(true)
+		.setSortName("Title")
+		.setSortOrder(SortOrder.asc)
+		.setPager("riskpager")
+		.setPgButtons(true)
+		.setCellEdit(true)
+		.setCellSubmit(CellSubmit.clientArray)
+		.Render()
+)
+@Html.HiddenFor(m => m.RiskType)

@@ -14,5 +14,6 @@ namespace Loop.Interfaces
 		string Name { get; }
 		string Surname { get; }
 		string Email { get; }
+		bool IsActive { get; }
 	}
 }

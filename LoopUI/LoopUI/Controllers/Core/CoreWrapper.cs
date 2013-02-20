@@ -26,7 +26,7 @@ namespace LoopUI.Controllers
 			{
 				if (instance == null)
 				{
-					instance = new CoreWrapper(new Core(DataStrorage.Instance));
+					instance = new CoreWrapper(new Core(DataStorage.Instance));
 				}
 				return instance;
 			}
@@ -34,7 +34,7 @@ namespace LoopUI.Controllers
 
 		internal bool UserExists(string login)
 		{
-			return DataStrorage.Instance.UserExists(login);
+			return DataStorage.Instance.UserExists(login);
 		}
 	}
 }

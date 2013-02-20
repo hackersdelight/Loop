@@ -87,6 +87,7 @@
     <Compile Include="Controllers\Core\DataExporter.cs" />
     <Compile Include="Controllers\Core\IConnectToDB.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
+    <Compile Include="Controllers\Helpers\EnumerationHelper.cs" />
     <Compile Include="Controllers\Helpers\JSonConverters.cs" />
     <Compile Include="Controllers\Logger.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -95,6 +96,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Captcha.cs" />
+    <Compile Include="Models\EnumerationModel.cs" />
     <Compile Include="Models\Risk.cs" />
     <Compile Include="Models\RiskType.cs" />
     <Compile Include="Models\Sprint.cs" />
@@ -259,6 +261,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\PartialViews\Tasks.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Mvc.HtmlHelper.jqGrid\Mvc.HtmlHelper.jqGrid.csproj">
+      <Project>{6E40CC48-8EDF-4608-9BD3-D43A9B649409}</Project>
+      <Name>Mvc.HtmlHelper.jqGrid</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

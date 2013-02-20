@@ -9,5 +9,6 @@ namespace Loop.Interfaces
 	{
 		int Id { get; }
 		string KeyedName { get; }
+		bool IsActive { get; }
 	}
 }

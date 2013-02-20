@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using LoopUI.Models;
 using LoopUI.Helpers;
+using LoopUI.Controllers;
+using Loop.Interfaces;
 
 namespace LoopUI.Areas.Admin.Controllers
 {
@@ -15,18 +17,14 @@ namespace LoopUI.Areas.Admin.Controllers
 
 		public ActionResult Index()
 		{
-			return View(new List<Risk>());
+			EnumerationModel model = new EnumerationModel();
+			model.RiskType = EnumerationHelper.GetRiskTypeEnumeration();
+			return View(model);
 		}
 
 		public ActionResult GetRisks()
 		{
-			List<Risk> result = new List<Risk>();
-			result.Add(new Risk()
-			{
-				Id = 1,
-				Title = "Regression",
-				Type = new RiskType() { Id = 1, Title ="Sprint"}
-			});
+			List<IRisk> result = DataStorage.Instance.GetAllRisks();
 			return Json(JSonConverters.GetJSonForRisks(result, 1, 1, 1), JsonRequestBehavior.AllowGet);
 		}
 
