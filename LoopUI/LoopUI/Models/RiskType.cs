@@ -6,8 +6,9 @@ using Loop.Interfaces;
 
 namespace LoopUI.Models
 {
-	public class TaskStatus: ITaskStatus
+	public class RiskType: IRiskType
 	{
+
 		public int Id
 		{
 			get;

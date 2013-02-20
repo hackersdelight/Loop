@@ -1,15 +1,18 @@
 ﻿@{
-		Layout = "~/Views/Shared/_Layout.cshtml";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @section menu
 {
-<!--custom menu sections-->
+	<!--custom menu sections-->
 	<li id="User">@Html.ActionLink("Users", "Index", "User")</li>
 	<li id="Sprint">@Html.ActionLink("Sprints", "Index", "Sprint")</li>
 	<li id="Task">@Html.ActionLink("Tasks", "Index", "Task")</li>
 	<li id="Risk">@Html.ActionLink("Risks", "Index", "Risk")</li>
 	<li id="Metrics">@Html.ActionLink("Metrics", "Index", "Metrics")</li>
 }
-
+@section submenu
+{
+	<h2>Sidebar</h2>
+	@RenderSection("sidebar", false)
+}
 @RenderBody()

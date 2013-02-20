@@ -5,9 +5,12 @@ using System.Text;
 
 namespace Loop.Interfaces
 {
-	public interface ITaskStatus
+	public interface ITaskPriority
 	{
 		int Id { get; }
+		//display name of the priority
 		string Title { get; }
+		//weight of the priority
+		int Value { get; }
 	}
 }

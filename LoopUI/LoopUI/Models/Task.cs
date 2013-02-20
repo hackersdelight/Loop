@@ -74,5 +74,12 @@ namespace LoopUI.Models
 			get;
 			set;
 		}
+
+
+		public ITaskPriority Prioroty
+		{
+			get;
+			set;
+		}
 	}
 }

@@ -19,5 +19,11 @@ namespace LoopUI.Models
 			get;
 			set;
 		}
+
+		public IRiskType Type
+		{
+			get;
+			set;
+		}
 	}
 }

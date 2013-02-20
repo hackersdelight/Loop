@@ -12,6 +12,7 @@ namespace Loop.Interfaces
 		string Title { get;}
 		//Planning, Required, Fixed etc
 		ITaskStatus Status { get; }
+		ITaskPriority Prioroty { get; }
 		string Description { get; }
 		string Steps { get; }
 		string Background { get; }

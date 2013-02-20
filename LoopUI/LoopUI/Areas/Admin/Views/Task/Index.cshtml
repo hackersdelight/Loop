@@ -3,10 +3,17 @@
 	ViewBag.Title = "Tasks";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<div style="padding:0;">
-@{
-	//controller may be also Sprint or user
-	ViewBag.transactionController = "Task";
-	Html.RenderPartial("PartialViews/Tasks");
+@section sidebar
+{
+	<ul class="list-style1">
+		<li class="first"><a href="#">First action</a></li>
+		<li><a href="#">Second action</a></li>
+	</ul>
 }
+<div style="padding: 0;">
+	@{
+		//controller may be also Sprint or user
+		ViewBag.transactionController = "Task";
+		Html.RenderPartial("PartialViews/Tasks");
+	}
 </div>

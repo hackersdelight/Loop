@@ -9,5 +9,6 @@ namespace Loop.Interfaces
 	{
 		int Id { get; }
 		string Title { get; }
+		IRiskType Type { get; }
 	}
 }

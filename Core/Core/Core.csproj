@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IRisk.cs" />
+    <Compile Include="Interfaces\IRiskType.cs" />
     <Compile Include="Interfaces\ISprint.cs" />
+    <Compile Include="Interfaces\ITaskPriority.cs" />
     <Compile Include="Interfaces\ITaskStatus.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Loop.cs" />

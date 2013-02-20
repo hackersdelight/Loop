@@ -6,7 +6,7 @@ using Loop.Interfaces;
 
 namespace LoopUI.Models
 {
-	public class TaskStatus: ITaskStatus
+	public class TaskPriority: ITaskPriority
 	{
 		public int Id
 		{
@@ -15,6 +15,12 @@ namespace LoopUI.Models
 		}
 
 		public string Title
+		{
+			get;
+			set;
+		}
+
+		public int Value
 		{
 			get;
 			set;

@@ -26,9 +26,10 @@ namespace LoopUI.Areas.Admin.Controllers
 				Id = 1,
 				Number = "IR-1010100",
 				Title = "Test",
-				Status = new TaskStatus() { Id = 1, Status = "1:Planning" },
+				Status = new TaskStatus() { Id = 1, Title = "Planning" },
+				Prioroty = new TaskPriority() {Id = 1, Title = "1", Value = 5},
+				Assignment = new LoopUI.Models.User() {Id = 1, Name = "alexandra", Surname = "panaryna", Login ="sandra"},
 				IsActive = true
-				//todo: add assignment here
 			});
 			//Json(JSonConverters.GetJsonForUsers(users, page, total, total / rows + 1), JsonRequestBehavior.AllowGet);
 			return Json(JSonConverters.GetJSonForTasks(result, 1, 1, 1),JsonRequestBehavior.AllowGet);

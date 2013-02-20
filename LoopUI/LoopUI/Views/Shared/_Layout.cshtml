@@ -24,8 +24,9 @@
 						<div id="header-wrapper">
 							<div id="header">
 								<div id="logo">
-								<h1>@Html.ActionLink("Loop", "Logout", new { area = "", controller ="Login" })</h1>
-								<p>Optimized resource allocation system for Agile development.</p>
+									<h1>@Html.ActionLink("Loop", "Logout", new { area = "", controller = "Login" })</h1>
+									<p>
+										Optimized resource allocation system for Agile development.</p>
 								</div>
 							</div>
 						</div>
@@ -35,18 +36,18 @@
 						<div id="menu-wrapper">
 							<div id="menu">
 								<ul>
-								<li id="Login">
-									<!-- Main menu will be here -->
+									<li id="Login">
+										<!-- Main menu will be here -->
 										@{
-												if (Request.IsAuthenticated)
-												{
-													@Html.ActionLink("Logout", "Logout", new { area = "", controller = "Login" });
-												}
-												else
-												{
-													@Html.ActionLink("Login", "Index", new { area = "", controller = "Login" });
-												}
+											if (Request.IsAuthenticated)
+											{
+	@Html.ActionLink("Logout", "Logout", new { area = "", controller = "Login" });
 											}
+											else
+											{
+	@Html.ActionLink("Login", "Index", new { area = "", controller = "Login" });
+											}
+										}
 									</li>
 									@RenderSection("menu", false)
 									<li id="Manual">@Html.ActionLink("Manual", "Index", "Manual")</li>
@@ -70,7 +71,7 @@
 						</div>
 						<!-- end #content -->
 						<div id="sidebar">
-							@RenderSection("sidebar", false)
+							@RenderSection("submenu", false)
 						</div>
 						<!-- end #sidebar -->
 					</div>

@@ -96,8 +96,10 @@
     </Compile>
     <Compile Include="Models\Captcha.cs" />
     <Compile Include="Models\Risk.cs" />
+    <Compile Include="Models\RiskType.cs" />
     <Compile Include="Models\Sprint.cs" />
     <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\TaskPriority.cs" />
     <Compile Include="Models\TaskStatus.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
