@@ -9,15 +9,15 @@
 				mtype: 'GET',
 				width: 586,
 				height: 250,
-				colNames: ['Number', 'Title', 'Status', 'IsActive'],
+				colNames: ['Number', 'Title', 'Status', 'IsActive', ' '],
 				colModel: [
 									{ name: 'number', index: 'number', width: 175, fixed: true, align: 'left' },
 									{ name: 'title', index: 'title', width: 80, fixed: true, align: 'left' },
 									{ name: 'status', index: 'status', width: 120, fixed: true, align: 'left', editable: true, edittype: 'select',
 										editoptions: { value: "1:Planning;2:Development" }, formatter: 'select', editrules: { required: true }},
-									{ name: 'isactive', index: 'isactive', width: 85, fixed: true, align: 'center', editable: true, edittype: 'checkbox', editoptions: { value: "True:False" },
-										formatter: 'checkbox', formatoptions: { disabled: false}
-									}
+									{ name: 'isactive', index: 'isactive', width: 40, fixed: true, align: 'center', editable: true, edittype: 'checkbox', editoptions: { value: "True:False" },
+										formatter: 'checkbox', formatoptions: { disabled: false}},
+									{ name: 'myaction', index: 'myaction', width: 80, fixed: true, align: 'left', sortable: false, resize: false, formatter: 'actions', formatoptions: { keys: true} }
 							],
 				pager: jQuery('#taskpager'),
 				//rowNum: 10000,
@@ -28,7 +28,45 @@
 				sortorder: "desc",
 				//imgpath: '/scripts/themes/coffee/images',
 				viewrecords: true,
-				caption: 'Tasks'
+				caption: 'Tasks',
+				loadComplete: function () {
+					var grid = $("#task");
+					getColumnIndexByName = function (grid, columnName) {
+						var cm = grid.jqGrid('getGridParam', 'colModel'), i = 0, l = cm.length;
+						for (; i < l; i += 1) {
+							if (cm[i].name === columnName) {
+								return i; // return the index
+							}
+						}
+						return -1;
+					}
+					var iCol = getColumnIndexByName(grid, 'myaction');
+					grid.children("tbody")
+                    .children("tr.jqgrow")
+                    .children("td:nth-child(" + (iCol + 1) + ")")
+                    .each(function () {
+                    	$("<div>",
+                            {
+                            	//style: "margin-left: 5px; float:left",
+                            	//class: "ui-pg-div ui-inline-custom",
+                            	title: "Custom",
+                            	mouseover: function () {
+                            		$(this).addClass('ui-state-hover');
+                            	},
+                            	mouseout: function () {
+                            		$(this).removeClass('ui-state-hover');
+                            	},
+                            	click: function (e) {
+                            		alert("'Custom' button is clicked in the rowis=" +
+                                          $(e.target).closest("tr.jqgrow").attr("id") + " !");
+                            	}
+                            }
+                          ).css({ "margin-left": "5px", float: "left" })
+                           .addClass("ui-pg-div ui-inline-custom")
+                           .append('<span class="ui-icon ui-icon-document"></span>')
+                           .appendTo($(this).children("div"));
+                    });
+				}
 			});
 		});
 	</script>
