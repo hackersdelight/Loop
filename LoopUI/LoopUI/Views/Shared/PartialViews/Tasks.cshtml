@@ -1,50 +1,52 @@
-﻿<table id="task" class="scroll" cellpadding="0" cellspacing="0"></table>
-		<div id="taskpager" class="scroll" style="text-align:center;">
-		</div>
-	<script type="text/javascript">
-		jQuery(document).ready(function () {
-			jQuery("#task").jqGrid({
-				url: '@Url.Action("GetTasks", ViewBag.transactionController)',
-				datatype: 'json',
-				mtype: 'GET',
-				width: 600,
-				height: 250,
-				colNames: ['Number', 'Title', 'Status', 'Priority', 'Assignment', 'IsActive', ' '],
-				colModel: [
+﻿<table id="task" class="scroll" cellpadding="0" cellspacing="0">
+</table>
+<div id="taskpager" class="scroll" style="text-align: center;">
+</div>
+<script type="text/javascript">
+	jQuery(document).ready(function () {
+		jQuery("#task").jqGrid({
+			url: '@Url.Action("GetTasks", ViewBag.transactionController)',
+			datatype: 'json',
+			mtype: 'GET',
+			width: 600,
+			height: 250,
+			colNames: ['Number', 'Title', 'Status', 'Priority', 'Assignment', 'IsActive', ' '],
+			colModel: [
 									{ name: 'number', index: '1', width: 70, fixed: true, align: 'left', editable: false },
 									{ name: 'title', index: '2', width: 90, fixed: true, align: 'left', editable: false },
 									{ name: 'status', index: '3', width: 80, fixed: true, align: 'left', editable: true, edittype: 'select',
-										editoptions: { value: "Planning:Planning;Development:Development" }, formatter: 'select', editrules: { required: true}
+										editoptions: { value: "Planning:Planning;Development:Development" }, formatter: 'select', editrules: { required: true }
 									},
-									{ name: 'priority', index:'4', width: 50, fixed: true, align: 'left', editable:true, edittype:'select', editoptions: { value: "1:1;2:2" }, formatter:'select'},
+									{ name: 'priority', index: '4', width: 50, fixed: true, align: 'left', editable: true, edittype: 'select', editoptions: { value: "1:1;2:2" }, formatter: 'select' },
 									{ name: 'assignment', index: '5', width: 90, fixed: true, align: 'left', editable: true, edittype: 'select', editoptions: { value: "sandra:sandra;god:god" }, formatter: 'select' },
 									{ name: 'isactive', index: '6', width: 60, fixed: true, align: 'center', editable: true, edittype: 'checkbox', editoptions: { value: "True:False" },
-										formatter: 'checkbox'},
+										formatter: 'checkbox'
+									},
 									{ name: 'myaction', index: '7', width: 100, fixed: true, align: 'left', sortable: false, resize: false, formatter: 'actions', formatoptions: { keys: true} }
 							],
-				pager: jQuery('#taskpager'),
-				//rowNum: 10000,
-				//pgbuttons: false,
-				//pgtext: null,
-				viewrecords: false,
-				sortname: 'number',
-				sortorder: "desc",
-				//imgpath: '/scripts/themes/coffee/images',
-				viewrecords: true,
-				caption: 'Tasks',
-				loadComplete: function () {
-					var grid = $("#task");
-					getColumnIndexByName = function (grid, columnName) {
-						var cm = grid.jqGrid('getGridParam', 'colModel'), i = 0, l = cm.length;
-						for (; i < l; i += 1) {
-							if (cm[i].name === columnName) {
-								return i; // return the index
-							}
+			pager: jQuery('#taskpager'),
+			//rowNum: 10000,
+			//pgbuttons: false,
+			//pgtext: null,
+			viewrecords: false,
+			sortname: 'number',
+			sortorder: "desc",
+			//imgpath: '/scripts/themes/coffee/images',
+			viewrecords: true,
+			caption: 'Tasks',
+			loadComplete: function () {
+				var grid = $("#task");
+				getColumnIndexByName = function (grid, columnName) {
+					var cm = grid.jqGrid('getGridParam', 'colModel'), i = 0, l = cm.length;
+					for (; i < l; i += 1) {
+						if (cm[i].name === columnName) {
+							return i; // return the index
 						}
-						return -1;
 					}
-					var iCol = getColumnIndexByName(grid, 'myaction');
-					grid.children("tbody")
+					return -1;
+				}
+				var iCol = getColumnIndexByName(grid, 'myaction');
+				grid.children("tbody")
                     .children("tr.jqgrow")
                     .children("td:nth-child(" + (iCol + 1) + ")")
                     .each(function () {
@@ -52,7 +54,7 @@
                             {
                             	//style: "margin-left: 5px; float:left",
                             	//class: "ui-pg-div ui-inline-custom",
-                            	title: "Custom",
+                            	title: "Start",
                             	mouseover: function () {
                             		$(this).addClass('ui-state-hover');
                             	},
@@ -66,10 +68,10 @@
                             }
                           ).css({ "margin-left": "5px", float: "left" })
                            .addClass("ui-pg-div ui-inline-custom")
-                           .append('<span class="ui-icon ui-icon-document"></span>')
+                           .append('<span class="ui-icon ui-icon-play"></span>')
                            .appendTo($(this).children("div"));
                     });
-				}
-			});
+			}
 		});
+	});
 	</script>
