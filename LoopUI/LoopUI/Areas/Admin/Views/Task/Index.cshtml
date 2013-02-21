@@ -10,6 +10,19 @@
 		<li><a href="#">Select tasks for sprint</a></li>
 	</ul>
 }
+<script type="text/javascript">
+	function GridLoaded() 
+	{
+		var grid = $("#task");
+		//decide by task state if additional option should be added.
+
+		var iCol = getColumnIndexByName(grid, 'actions');
+		AddStartOption(grid, iCol);
+		AddPauseOption(grid, iCol);
+		AddPromoteOption(grid, iCol);
+		AddReturnOption(grid, iCol);
+	}
+</script>
 <table id="task" class="scroll" cellpadding="0" cellspacing="0">
 </table>
 <div id="taskpager" class="scroll" style="text-align: center;">
@@ -25,6 +38,7 @@
 		.setSortable(true)
 		.setFixed(true)
 		.setAlign(Align.center)
+		.setEditable(true)
 		.setWidth(110))
 		.addColumn(new Column("priority").setLabel("Priority")
 		.setSortable(false)
@@ -73,10 +87,10 @@
 		.setPager("taskpager")
 		.setPgButtons(true)
 		.setCellEdit(true)
+		.setEditUrl(Url.Action("TaskOperation", "Task"))
 		.setCellSubmit(CellSubmit.clientArray)
-		.setEditUrl(Url.Action("EditTask", "Task"))
+		.onLoadComplete("GridLoaded();")
 		.Render()
 )
-@Html.HiddenFor(m=> m.TaskPriority)
-@Html.HiddenFor(m=> m.ActiveUsers)
-
+@Html.HiddenFor(m => m.TaskPriority)
+@Html.HiddenFor(m => m.ActiveUsers)

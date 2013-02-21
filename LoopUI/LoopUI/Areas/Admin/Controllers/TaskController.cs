@@ -31,9 +31,28 @@ namespace LoopUI.Areas.Admin.Controllers
 			return Json(JSonConverters.GetJSonForTasks(result, 1, 1, 1),JsonRequestBehavior.AllowGet);
 		}
 
-		public ActionResult EditTask(int id, string number, string title, string status, string priority, string assignment, string isactive)
+		public ActionResult TaskOperation(int id, string title, string priority, string assignment, string isactive, string oper)
 		{
-			return Index();
+			if (oper == "edit")
+			{
+				return EditTask(id, title, priority, assignment, isactive);
+			}
+			else if (oper == "del")
+			{
+				return DeleteTask(id);
+			}
+			else
+				return RedirectToAction("Index");
+		}
+
+		public ActionResult EditTask(int id, string title, string priority, string assignment, string isactive)
+		{
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult DeleteTask(int id)
+		{
+			return RedirectToAction("Index");
 		}
 	}
 }
