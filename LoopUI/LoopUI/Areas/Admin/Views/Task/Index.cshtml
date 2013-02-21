@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LoopUI.Models.Task>
+﻿@model LoopUI.Models.EnumerationModel
 @{
 	ViewBag.Title = "Tasks";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -6,14 +6,87 @@
 @section sidebar
 {
 	<ul class="list-style1">
-		<li class="first"><a href="#">First action</a></li>
-		<li><a href="#">Second action</a></li>
+		<li class="first"><a href="#">Optimize task assignment</a></li>
+		<li><a href="#">Select tasks for sprint</a></li>
 	</ul>
 }
-<div style="padding: 0;">
-	@{
-		//controller may be also Sprint or user
-		ViewBag.transactionController = "Task";
-		Html.RenderPartial("PartialViews/Tasks");
-	}
+<table id="task" class="scroll" cellpadding="0" cellspacing="0">
+</table>
+<div id="taskpager" class="scroll" style="text-align: center;">
 </div>
+@using Mvc.HtmlHelpers
+@(Html.jqGrid("task")
+		.addColumn(new Column("number").setLabel("Number")
+		.setSortable(true)
+		.setFixed(true)
+		.setAlign(Align.center)
+		.setWidth(70))
+		.addColumn(new Column("title").setLabel("Title")
+		.setSortable(true)
+		.setFixed(true)
+		.setAlign(Align.center)
+		.setWidth(110))
+		.addColumn(new Column("status").setLabel("Status")
+		.setSortable(false)
+		.setEditable(true)
+		.setFixed(true)
+		.setAlign(Align.center)
+		.setFormatter(Formatters.select)
+		.setEditType(EditType.select)
+		.setEditOptions("value: $('#TaskStatus').val()")
+		.setWidth(120))
+		.addColumn(new Column("priority").setLabel("Priority")
+		.setSortable(false)
+		.setEditable(true)
+		.setEditType(EditType.select)
+		.setFormatter(Formatters.select)
+		.setAlign(Align.center)
+		.setEditOptions("value: $('#TaskPriority').val()")
+		.setWidth(50))
+		.addColumn(new Column("assignment").setLabel("Assignment")
+		.setSortable(true)
+		.setEditable(true)
+		.setEditType(EditType.select)
+		.setFormatter(Formatters.select)
+		.setAlign(Align.center)
+		.setEditOptions("value: $('#ActiveUsers').val()")
+		.setWidth(90))
+		.addColumn(new Column("isactive").setLabel("Active")
+		.setEditType(EditType.checkbox)
+		.setEditOptions("value: 'True:False'")
+		.setFormatter(Formatters.checkbox)
+		.setAlign(Align.center)
+		.setEditable(true)
+		.setWidth(60))
+		.addColumn(new Column("actions").setLabel("Actions")
+		.setSortable(false)
+		.setAlign(Align.left)
+		.setEditable(false)
+		.setWidth(100)
+		.setFormatter(Formatters.actions))
+
+		// settings
+		.setCaption("Tasks")
+		.setRequestType(RequestType.get)
+		.setUrl(Url.Action("GetTasks", "Task"))
+		.setAltRows(true)
+		.setAltClass("altGridRows")
+		.setAutoWidth(true)
+		.setWidth(600)
+		.setHeight(250)
+		.setRowNum(10)
+		.setRowList(new int[] { 10, 15, 20, 50 })
+		.setViewRecords(true)
+		.setSortName("Title")
+		.setSortOrder(SortOrder.asc)
+		.setPager("taskpager")
+		.setPgButtons(true)
+		.setCellEdit(true)
+		.setCellSubmit(CellSubmit.clientArray)
+		.setEditUrl(Url.Action("EditTask", "Task"))
+		.Render()
+)
+@Html.HiddenFor(m=> m.TaskPriority)
+@Html.HiddenFor(m=> m.TaskStatus)
+@Html.HiddenFor(m=> m.ActiveUsers)
+

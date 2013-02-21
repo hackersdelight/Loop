@@ -23,9 +23,9 @@ namespace LoopUI.Helpers
 					{
 							x.Number,
 							x.Title,
-							x.Status.Title,
-							x.Prioroty.Title,
-							x.Assignment.Login,
+							x.Status.Id.ToString(),
+							x.Prioroty.Id.ToString(),
+							x.Assignment.Id.ToString(),
 							x.IsActive.ToString()
 					}
 				})
