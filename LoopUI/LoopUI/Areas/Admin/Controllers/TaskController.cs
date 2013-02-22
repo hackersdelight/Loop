@@ -54,5 +54,30 @@ namespace LoopUI.Areas.Admin.Controllers
 		{
 			return RedirectToAction("Index");
 		}
+
+		public ActionResult AddTask()
+		{
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult StartTask(int id)
+		{
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult PauseTask(int id)
+		{
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult PromoteTask(int id)
+		{
+			return RedirectToAction("Index");
+		}
+
+		public ActionResult ReturnTask(int id)
+		{
+			return RedirectToAction("Index");
+		}
 	}
 }

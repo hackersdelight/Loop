@@ -19,99 +19,29 @@ function SetOverlay(cls) {
 	return true;
 }
 function AddReturnOption(grid, iCol) {
-	grid.children("tbody")
-				.children("tr.jqgrow")
-				.children("td:nth-child(" + (iCol + 1) + ")")
-				.each(function () {
-					$("<div>",
-								{
-									//style: "margin-left: 5px; float:left",
-									//class: "ui-pg-div ui-inline-custom",
-									title: "Start",
-									mouseover: function () {
-										$(this).addClass('ui-state-hover');
-									},
-									mouseout: function () {
-										$(this).removeClass('ui-state-hover');
-									},
-									click: function (e) {
-										alert("'Custom' button is clicked in the rowis=" +
-															$(e.target).closest("tr.jqgrow").attr("id") + " !");
-									}
-								}
-							).css({ "margin-left": "5px", float: "left" })
-								.addClass("ui-pg-div ui-inline-custom")
-								.append('<span class="ui-icon ui-icon-arrowthickstop-1-w"></span>')
-								.appendTo($(this).children("div"));
-				});
+	AddGridCustomButton(grid, iCol, "Return", "ui-icon-arrowthickstop-1-w", "http://localhost:5174/Admin/Task/ReturnTask");
 }
 
 function AddPromoteOption(grid, iCol) {
-	grid.children("tbody")
-			.children("tr.jqgrow")
-			.children("td:nth-child(" + (iCol + 1) + ")")
-			.each(function () {
-				$("<div>",
-							{
-								//style: "margin-left: 5px; float:left",
-								//class: "ui-pg-div ui-inline-custom",
-								title: "Start",
-								mouseover: function () {
-									$(this).addClass('ui-state-hover');
-								},
-								mouseout: function () {
-									$(this).removeClass('ui-state-hover');
-								},
-								click: function (e) {
-									alert("'Custom' button is clicked in the rowis=" +
-														$(e.target).closest("tr.jqgrow").attr("id") + " !");
-								}
-							}
-						).css({ "margin-left": "5px", float: "left" })
-							.addClass("ui-pg-div ui-inline-custom")
-							.append('<span class="ui-icon ui-icon-arrowthickstop-1-e"></span>')
-							.appendTo($(this).children("div"));
-			});
+	AddGridCustomButton(grid, iCol, "Promote", "ui-icon-arrowthickstop-1-e", "http://localhost:5174/Admin/Task/PromoteTask");
 }
 
 function AddPauseOption(grid, iCol) {
-	grid.children("tbody")
-				.children("tr.jqgrow")
-				.children("td:nth-child(" + (iCol + 1) + ")")
-				.each(function () {
-					$("<div>",
-								{
-									//style: "margin-left: 5px; float:left",
-									//class: "ui-pg-div ui-inline-custom",
-									title: "Start",
-									mouseover: function () {
-										$(this).addClass('ui-state-hover');
-									},
-									mouseout: function () {
-										$(this).removeClass('ui-state-hover');
-									},
-									click: function (e) {
-										alert("'Custom' button is clicked in the rowis=" +
-															$(e.target).closest("tr.jqgrow").attr("id") + " !");
-									}
-								}
-							).css({ "margin-left": "5px", float: "left" })
-								.addClass("ui-pg-div ui-inline-custom")
-								.append('<span class="ui-icon ui-icon-pause"></span>')
-								.appendTo($(this).children("div"));
-				});
+	AddGridCustomButton(grid, iCol, "Pause", "ui-icon-pause", "http://localhost:5174/Admin/Task/PauseTask");
 }
 
 function AddStartOption(grid, iCol) {
+	AddGridCustomButton(grid, iCol, "Start", "ui-icon-play", "http://localhost:5174/Admin/Task/StartTask");
+}
+
+function AddGridCustomButton(grid, iCol, btnTitle, btnImage, operationUrl) {
 	grid.children("tbody")
 				.children("tr.jqgrow")
 				.children("td:nth-child(" + (iCol + 1) + ")")
 				.each(function () {
 					$("<div>",
 								{
-									//style: "margin-left: 5px; float:left",
-									//class: "ui-pg-div ui-inline-custom",
-									title: "Start",
+									title: btnTitle,
 									mouseover: function () {
 										$(this).addClass('ui-state-hover');
 									},
@@ -119,13 +49,17 @@ function AddStartOption(grid, iCol) {
 										$(this).removeClass('ui-state-hover');
 									},
 									click: function (e) {
-										alert("'Custom' button is clicked in the rowis=" +
-															$(e.target).closest("tr.jqgrow").attr("id") + " !");
+										var id = $(e.target).closest("tr.jqgrow").attr("id");
+										//var celValue = grid.jqGrid('getCell', selRowId, 'columnName');
+										var gridData = grid.jqGrid('getRowData', id);
+										gridData.id = id;
+										var postData = JSON.stringify(gridData);
+										SendRequest(postData, operationUrl);
 									}
 								}
 							).css({ "margin-left": "5px", float: "left" })
 								.addClass("ui-pg-div ui-inline-custom")
-								.append('<span class="ui-icon ui-icon-play"></span>')
+								.append('<span class="ui-icon ' + btnImage + '"></span>')
 								.appendTo($(this).children("div"));
 				});
 }
@@ -138,4 +72,12 @@ function getColumnIndexByName(grid, columnName) {
 		}
 	}
 	return -1;
+}
+
+function SendRequest(postData, url) {
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open('POST', url, 'Sync', null, null);
+	xmlhttp.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+	xmlhttp.setRequestHeader("Content-Length", postData.length);
+	xmlhttp.send(postData);
 }
