@@ -55,8 +55,17 @@ namespace LoopUI.Areas.Admin.Controllers
 			return RedirectToAction("Index");
 		}
 
+		[HttpGet]
 		public ActionResult AddTask()
 		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult AddTask(Task task)
+		{
+			//validation
+			//adding of new task
 			return RedirectToAction("Index");
 		}
 
