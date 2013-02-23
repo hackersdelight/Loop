@@ -17,19 +17,11 @@ namespace Loop
 			storage = dataStorage;
 		}
 
-		public List<ITask> GetAllTasks()
-		{
-			return storage.GetAllTasks();
-		}
-
-		public List<IRisk> GetAllRisks()
-		{
-			return storage.GetAllRisks();
-		}
-
-		public List<ISprint> GetAllSprints()
-		{
-			return storage.GetAllSprints();
-		}
+		//promote task
+		//return task
+		//select active tasks
+		//count metrics
+		//calculate optimized assignment
+		//etc.
 	}
 }

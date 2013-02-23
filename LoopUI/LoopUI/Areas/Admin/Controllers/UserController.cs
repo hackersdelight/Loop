@@ -22,8 +22,7 @@ namespace LoopUI.Areas.Admin.Controllers
 
 		public ActionResult GetUsers()
 		{
-			List<IUser> result = DataStorage.Instance.GetAllUsers();
-			return Json(JSonConverters.GetJSonForUsers(result, 1, 1, 1), JsonRequestBehavior.AllowGet);
+			return Json(JSonHelper.GetJSonForUsers(CoreWrapper.Instance.GetAllUsers(), 1, 1, 1), JsonRequestBehavior.AllowGet);
 		}
 
 	}

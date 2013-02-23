@@ -18,14 +18,13 @@ namespace LoopUI.Areas.Admin.Controllers
 		public ActionResult Index()
 		{
 			EnumerationModel model = new EnumerationModel();
-			model.RiskType = EnumerationHelper.GetRiskTypeEnumeration();
+			model.RiskType = JSonHelper.GetAllRiskTypes();
 			return View(model);
 		}
 
 		public ActionResult GetRisks()
 		{
-			List<IRisk> result = DataStorage.Instance.GetAllRisks();
-			return Json(JSonConverters.GetJSonForRisks(result, 1, 1, 1), JsonRequestBehavior.AllowGet);
+			return Json(JSonHelper.GetJSonForRisks(CoreWrapper.Instance.GetAllRisks(), 1, 1, 1), JsonRequestBehavior.AllowGet);
 		}
 
 	}

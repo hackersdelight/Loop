@@ -18,17 +18,16 @@ namespace LoopUI.Areas.Admin.Controllers
 		public ActionResult Index()
 		{
 			EnumerationModel model = new EnumerationModel();
-			model.ActiveUsers = EnumerationHelper.GetActiveUsersEnumeration();
-			model.TaskPriority = EnumerationHelper.GetTaskPriorityEnumeration();
-			model.TaskStatus = EnumerationHelper.GetTaskStatusEnumeration();
+			model.ActiveUsers = JSonHelper.GetAllActiveUsers();
+			model.TaskPriority = JSonHelper.GetAllTaskPriorities();
+			model.TaskStatus = JSonHelper.GetAllTaskStatuses();
 			return View(model);
 		}
 
 		public ActionResult GetTasks()
 		{
-			List<ITask> result = DataStorage.Instance.GetAllTasks();
 			//Json(JSonConverters.GetJsonForUsers(users, page, total, total / rows + 1), JsonRequestBehavior.AllowGet);
-			return Json(JSonConverters.GetJSonForTasks(result, 1, 1, 1),JsonRequestBehavior.AllowGet);
+			return Json(JSonHelper.GetJSonForTasks(CoreWrapper.Instance.GetAllTasks(), 1, 1, 1),JsonRequestBehavior.AllowGet);
 		}
 
 		public ActionResult TaskOperation(int id, string title, string priority, string assignment, string isactive, string oper)

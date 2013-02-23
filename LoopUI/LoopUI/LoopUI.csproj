@@ -34,10 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Core\Core\bin\Debug\Core.dll</HintPath>
-    </Reference>
     <Reference Include="Mvc.HtmlHelper.jqGrid">
       <HintPath>..\3rdPartyLibs\Mvc.HtmlHelper.jqGrid.dll</HintPath>
     </Reference>
@@ -82,16 +78,19 @@
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
-    <Compile Include="Controllers\Core\ConnectToMsSql.cs" />
+    <Compile Include="Controllers\Core\DataBase\ConnectToMsSql.cs" />
     <Compile Include="Controllers\Core\CoreWrapper.cs" />
+    <Compile Include="Controllers\Core\DataBase\RiskActions.cs" />
+    <Compile Include="Controllers\Core\DataBase\SprintActions.cs" />
+    <Compile Include="Controllers\Core\DataBase\TaskActions.cs" />
+    <Compile Include="Controllers\Core\DataBase\UserActions.cs" />
     <Compile Include="Controllers\Core\DataProvider.cs" />
-    <Compile Include="Controllers\Core\DataStrorage.cs" />
-    <Compile Include="Controllers\Core\DbCommand.cs" />
+    <Compile Include="Controllers\Core\DataBase\DataStrorage.cs" />
+    <Compile Include="Controllers\Core\DataBase\DbCommand.cs" />
     <Compile Include="Controllers\Core\DataExporter.cs" />
-    <Compile Include="Controllers\Core\IConnectToDB.cs" />
+    <Compile Include="Controllers\Core\DataBase\IConnectToDB.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
-    <Compile Include="Controllers\Helpers\EnumerationHelper.cs" />
-    <Compile Include="Controllers\Helpers\JSonConverters.cs" />
+    <Compile Include="Controllers\Core\JSonHelper.cs" />
     <Compile Include="Controllers\Logger.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManualController.cs" />
@@ -264,6 +263,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Task\AddTask.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Core\Core.csproj">
+      <Project>{4E60E868-8CE9-4CAF-B839-39458A9EBA43}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

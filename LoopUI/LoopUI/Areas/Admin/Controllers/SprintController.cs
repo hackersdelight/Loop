@@ -22,8 +22,7 @@ namespace LoopUI.Areas.Admin.Controllers
 
 		public ActionResult GetSprints()
 		{
-			List<ISprint> result = DataStorage.Instance.GetAllSprints();
-			return Json(JSonConverters.GetJSonForSprints(result, 1, 1, 1), JsonRequestBehavior.AllowGet);
+			return Json(JSonHelper.GetJSonForSprints(CoreWrapper.Instance.GetAllSprints(), 1, 1, 1), JsonRequestBehavior.AllowGet);
 		}
 
 	}
