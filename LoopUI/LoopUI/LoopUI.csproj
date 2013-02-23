@@ -85,7 +85,7 @@
     <Compile Include="Controllers\Core\DataBase\TaskActions.cs" />
     <Compile Include="Controllers\Core\DataBase\UserActions.cs" />
     <Compile Include="Controllers\Core\DataProvider.cs" />
-    <Compile Include="Controllers\Core\DataBase\DataStrorage.cs" />
+    <Compile Include="Controllers\Core\DataBase\DataStorage.cs" />
     <Compile Include="Controllers\Core\DataBase\DbCommand.cs" />
     <Compile Include="Controllers\Core\DataExporter.cs" />
     <Compile Include="Controllers\Core\DataBase\IConnectToDB.cs" />
