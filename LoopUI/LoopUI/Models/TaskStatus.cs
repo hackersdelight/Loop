@@ -19,5 +19,11 @@ namespace LoopUI.Models
 			get;
 			set;
 		}
+
+		public Loop.Enumerations.StatusState State
+		{
+			get;
+			set;
+		}
 	}
 }
