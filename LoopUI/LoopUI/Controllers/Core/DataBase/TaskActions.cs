@@ -3,6 +3,7 @@ using Loop.Interfaces;
 using Loop.DatabaseConnection;
 using LoopUI.Models;
 using Loop.Enumerations;
+using System.Data;
 
 namespace LoopUI.Controllers
 {
@@ -21,7 +22,7 @@ namespace LoopUI.Controllers
 				Id = 1,
 				Number = "IR-1010100",
 				Title = "Test",
-				Status = new TaskStatus() { Id = 1, Title = "Planning", State = StatusState.Pending },
+				Status = new TaskStatus() { Id = 1, Title = "Planning"},
 				Prioroty = new TaskPriority() { Id = 1, Title = "1", Value = 5 },
 				Assignment = new LoopUI.Models.User() { Id = 1, Name = "alexandra", Surname = "panaryna", Login = "sandra" },
 				IsActive = true
@@ -41,9 +42,9 @@ namespace LoopUI.Controllers
 		public List<ITaskStatus> GetAllTaskStatuses()
 		{
 			List<ITaskStatus> result = new List<ITaskStatus>();
-			result.Add(new TaskStatus() { Id = 1, Title = "Planning", State = StatusState.Pending });
-			result.Add(new TaskStatus() { Id = 2, Title = "Development", State = StatusState.InProgress });
-			result.Add(new TaskStatus() { Id = 3, Title = "Closed", State = StatusState.Complete });
+			result.Add(new TaskStatus() { Id = 1, Title = "Planning"});
+			result.Add(new TaskStatus() { Id = 2, Title = "Development"});
+			result.Add(new TaskStatus() { Id = 3, Title = "Closed" });
 			return result;
 		}
 

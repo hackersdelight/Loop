@@ -49,5 +49,12 @@ namespace LoopUI.Models
 			get;
 			set;
 		}
+
+
+		public UserType UserType
+		{
+			get;
+			set;
+		}
 	}
 }

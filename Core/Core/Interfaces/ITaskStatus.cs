@@ -6,7 +6,6 @@ namespace Loop.Interfaces
 	{
 		int Id { get; }
 		string Title { get; }
-		StatusState State { get; }
 	}
 }
 namespace Loop.Enumerations

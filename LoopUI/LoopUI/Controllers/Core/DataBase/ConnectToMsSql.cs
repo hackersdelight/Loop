@@ -34,7 +34,7 @@ namespace Loop.DatabaseConnection
 		{
 			if (!(connectionIsOpen))
 			{
-				connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString);
+				connection = new SqlConnection(ConfigurationManager.ConnectionStrings["Loop"].ConnectionString);
 				connection.Open();
 				connectionIsOpen = true;
 			}

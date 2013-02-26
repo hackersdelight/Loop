@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Loop.Enumerations;
 
 namespace Loop.Interfaces
 {
@@ -9,6 +10,7 @@ namespace Loop.Interfaces
 		string Title { get;}
 		//Planning, Required, Fixed etc
 		ITaskStatus Status { get; }
+		StatusState State { get; }
 		ITaskPriority Prioroty { get; }
 		string Description { get; }
 		string Steps { get; }
