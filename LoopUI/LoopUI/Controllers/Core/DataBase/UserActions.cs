@@ -108,6 +108,13 @@ namespace LoopUI.Controllers
 			else return null;
 		}
 
+		public bool IsExist(string login)
+		{
+			if (UserCollection == null)
+				GetAllUsers();
+			return UserCollection.Exists(x => x.Login == login);
+		}
+
 		private IUser CreateUserModelInstance(DataRow row)
 		{
 			User u = new User()

@@ -52,6 +52,11 @@ namespace LoopUI.Areas.Admin.Controllers
 		[HttpPost]
 		public ActionResult AddUser(LoopUI.Models.User user)
 		{
+			if (!ModelState.IsValid)
+			{
+				return View();
+			}
+			//DataStorage.Instance.UserActions.AddUser(user);
 			return View();
 		}
 	}

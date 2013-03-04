@@ -53,5 +53,6 @@ namespace Loop.Interfaces
 		IUser GetUserById(int id);
 		List<IUser> GetAllUsers();
 		List<IUser> GetActiveUsers();
+		bool IsExist(string login);
 	}
 }
