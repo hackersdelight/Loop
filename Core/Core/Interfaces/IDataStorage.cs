@@ -32,6 +32,7 @@ namespace Loop.Interfaces
 		void EditSprint(ISprint sprint);
 		ISprint GetSprintById(int id);
 		List<ISprint> GetAllSprints();
+		List<ITask> GetAllTasksForSprint(int sprintId);
 	}
 
 	public interface IRiskActions
