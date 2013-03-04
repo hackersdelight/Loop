@@ -25,13 +25,13 @@ namespace LoopUI.Controllers
 		{
 			if (UserCollection != null)
 				return UserCollection;
-			UserCollection = new List<IUser>();
 			try
 			{
 				connection.OpenConnection();
 				DbCommand command = new DbCommand("select * from Users");
 				command.Type = DbCommand.DbCommandType.SELECT;
 				DataSet set = connection.ExecSelect(command);
+				UserCollection = new List<IUser>();
 				foreach (DataRow row in set.Tables[0].Rows)
 				{
 					UserCollection.Add(CreateUserModelInstance(row));
@@ -68,7 +68,6 @@ namespace LoopUI.Controllers
 
 		public void EditUser(IUser user)
 		{
-			UserCollection = new List<IUser>();
 			try
 			{
 				connection.OpenConnection();
@@ -84,17 +83,16 @@ namespace LoopUI.Controllers
 				command.Parameters[7] = new SqlParameter("usertype", (int)user.UserType);
 				command.Type = DbCommand.DbCommandType.UPDATE;
 				connection.ExecNonQuery(command);
-				DataSet set = connection.ExecSelect(command);
+				if (UserCollection != null)
+				{
+					//update value in Collection
+					UserCollection.Remove(UserCollection.Find(x => x.Id == user.Id));
+					UserCollection.Add(user);
+				}
 			}
 			finally
 			{
 				connection.CloseConnection();
-			}
-			if (UserCollection != null)
-			{
-				//update value in Collection
-				UserCollection.Remove(UserCollection.Find(x => x.Id == user.Id));
-				UserCollection.Add(user);
 			}
 		}
 
