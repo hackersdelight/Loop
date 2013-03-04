@@ -5,6 +5,7 @@ using Loop.Interfaces;
 using LoopUI.Models;
 using System.Data;
 using System.Data.SqlClient;
+using Loop.Enumerations;
 
 namespace LoopUI.Controllers
 {

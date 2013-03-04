@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using LoopUI.Models;
+﻿using System.Web.Mvc;
 using LoopUI.Controllers;
-using Loop.Interfaces;
 using LoopUI.Helpers;
 
 namespace LoopUI.Areas.Admin.Controllers
@@ -25,5 +19,40 @@ namespace LoopUI.Areas.Admin.Controllers
 			return Json(JSonHelper.GetJSonForUsers(CoreWrapper.Instance.GetAllUsers(), 1, 1, 1), JsonRequestBehavior.AllowGet);
 		}
 
+		public ActionResult UserOperation(int id, string name, string surname, string email, string isactive, string oper)
+		{
+			if (oper == "edit")
+			{
+				return EditUser(id, name, surname, email, isactive);
+			}
+			else if (oper == "del")
+			{
+				return DeleteUser(id);
+			}
+			else
+				return RedirectToAction("Index");
+		}
+
+		public ActionResult EditUser(int id, string name, string surname, string email, string isactive)
+		{
+			return View("Index");
+		}
+
+		public ActionResult DeleteUser(int id)
+		{
+			return View("Index");
+		}
+
+		[HttpGet]
+		public ActionResult AddUser()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult AddUser(LoopUI.Models.User user)
+		{
+			return View();
+		}
 	}
 }

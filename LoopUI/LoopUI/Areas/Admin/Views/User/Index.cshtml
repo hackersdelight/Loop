@@ -2,6 +2,21 @@
 	ViewBag.Title = "Users";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<script type="text/javascript">
+	function GridLoaded() {
+		var grid = $("#user");
+		//decide by task state if additional option should be added.
+
+		grid.navButtonAdd("#userpager", {
+			caption: "Add a new user",
+			buttonicon: "ui-icon-add",
+			onClickButton: function () {
+				document.location.href = '/Admin/User/AddUser';
+			},
+			position: "last"
+		});
+	}
+</script>
 <table id="user" class="scroll" cellpadding="0" cellspacing="0">
 </table>
 <div id="userpager" class="scroll" style="text-align: center;">
@@ -45,6 +60,8 @@
 		.setPager("userpager")
 		.setPgButtons(true)
 		.setCellEdit(true)
+		.setEditUrl(Url.Action("UserOperation", "User"))
 		.setCellSubmit(CellSubmit.clientArray)
+		.onLoadComplete("GridLoaded();")
 		.Render()
 )

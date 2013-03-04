@@ -1,4 +1,5 @@
 ﻿
+using Loop.Enumerations;
 namespace Loop.Interfaces
 {
 	public interface IUser
@@ -12,12 +13,5 @@ namespace Loop.Interfaces
 		string Surname { get; }
 		string Email { get; }
 		bool IsActive { get; }
-	}
-
-	public enum UserType
-	{
-		developer = 1,
-		tester = 2,
-		customer = 3
 	}
 }

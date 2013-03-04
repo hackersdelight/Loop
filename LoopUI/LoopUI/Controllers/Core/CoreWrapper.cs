@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using Loop;
 using Loop.Interfaces;
+using System.Web.Mvc;
+using System.ComponentModel;
 
 namespace LoopUI.Controllers
 {
@@ -63,6 +65,25 @@ namespace LoopUI.Controllers
 		internal List<ISprint> GetAllSprints()
 		{
 			return DataStorage.Instance.SprintActions.GetAllSprints();
+		}
+	}
+	public static class EnumExtensions
+	{
+		public static IEnumerable<SelectListItem> ToSelectList(this Enum enumValue)
+		{
+			return from Enum e in Enum.GetValues(enumValue.GetType())
+						 select new SelectListItem
+						 {
+							 Selected = e.Equals(enumValue),
+							 Text = e.ToDescription(),
+							 Value = e.ToString()
+						 };
+		}
+
+		public static string ToDescription(this Enum value)
+		{
+			var attributes = (DescriptionAttribute[])value.GetType().GetField(value.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
+			return attributes.Length > 0 ? attributes[0].Description : value.ToString();
 		}
 	}
 }
