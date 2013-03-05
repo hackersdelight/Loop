@@ -99,7 +99,7 @@ namespace LoopUI.Controllers
 			throw new System.NotImplementedException();
 		}
 
-		public void DeleteTask(ITask task)
+		public void DeleteTask(int id)
 		{
 			throw new System.NotImplementedException();
 		}

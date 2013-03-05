@@ -77,7 +77,7 @@ namespace LoopUI.Controllers
 		}
 
 
-		public void DeleteRisk(IRisk risk)
+		public void DeleteRisk(int id)
 		{
 			throw new NotImplementedException();
 		}

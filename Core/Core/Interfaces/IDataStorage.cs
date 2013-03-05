@@ -16,7 +16,7 @@ namespace Loop.Interfaces
 	public interface ITaskActions
 	{
 		void AddTask(ITask task);
-		void DeleteTask(ITask task);
+		void DeleteTask(int id);
 		void EditTask(ITask task);
 		ITask GetTaskById(int id);
 		List<ITask> GetAllTasks();
@@ -28,7 +28,7 @@ namespace Loop.Interfaces
 	public interface ISprintActions
 	{
 		void AddSprint(ISprint sprint);
-		void DeleteSprint(ISprint sprint);
+		void DeleteSprint(int id);
 		void EditSprint(ISprint sprint);
 		ISprint GetSprintById(int id);
 		List<ISprint> GetAllSprints();
@@ -38,7 +38,7 @@ namespace Loop.Interfaces
 	public interface IRiskActions
 	{
 		void AddRisk(IRisk risk);
-		void DeleteRisk(IRisk risk);
+		void DeleteRisk(int id);
 		void EditRisk(IRisk risk);
 		IRisk GetRiskById(int id);
 		List<IRisk> GetAllRisks();
@@ -48,7 +48,7 @@ namespace Loop.Interfaces
 	public interface IUserActions
 	{
 		void AddUser(IUser user);
-		void DeleteUser(IUser user);
+		void DeleteUser(int id);
 		void EditUser(IUser user);
 		IUser GetUserById(int id);
 		List<IUser> GetAllUsers();

@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 using LoopUI.Controllers;
 using LoopUI.Helpers;
+using System;
+using Loop.Interfaces;
 
 namespace LoopUI.Areas.Admin.Controllers
 {
@@ -23,7 +25,12 @@ namespace LoopUI.Areas.Admin.Controllers
 		{
 			if (oper == "edit")
 			{
-				return EditUser(id, name, surname, email, isactive);
+				LoopUI.Models.User u = DataStorage.Instance.UserActions.GetUserById(id) as LoopUI.Models.User;
+				u.Name = name;
+				u.Surname = surname;
+				u.Email = email;
+				u.IsActive = Convert.ToBoolean(isactive);
+				return EditUser(u);
 			}
 			else if (oper == "del")
 			{
@@ -33,13 +40,29 @@ namespace LoopUI.Areas.Admin.Controllers
 				return RedirectToAction("Index");
 		}
 
-		public ActionResult EditUser(int id, string name, string surname, string email, string isactive)
+		[HttpPost]
+		public ActionResult EditUser(LoopUI.Models.User user)
 		{
-			return View("Index");
+			if (ModelState.IsValid)
+			{
+				DataStorage.Instance.UserActions.EditUser(user);
+				return View("Index");
+			}
+			else
+			{
+				return View();
+			}
+		}
+
+		[HttpGet]
+		public ActionResult EditUser(int id)
+		{
+			return View(DataStorage.Instance.UserActions.GetUserById(id) as LoopUI.Models.User);
 		}
 
 		public ActionResult DeleteUser(int id)
 		{
+			DataStorage.Instance.UserActions.DeleteUser(id);
 			return View("Index");
 		}
 
@@ -52,12 +75,24 @@ namespace LoopUI.Areas.Admin.Controllers
 		[HttpPost]
 		public ActionResult AddUser(LoopUI.Models.User user)
 		{
-			if (!ModelState.IsValid)
+			if (IsValidLogin(user.Login) && ModelState.IsValid)
 			{
-				return View();
+				DataStorage.Instance.UserActions.AddUser(user);
+				return View("Index");
 			}
-			//DataStorage.Instance.UserActions.AddUser(user);
-			return View();
+			else
+				return View();
+		}
+
+		private bool IsValidLogin(string login)
+		{
+			if (login == null)
+				return true;
+			if (DataStorage.Instance.UserActions.IsExist(login.ToString()))
+			{
+				return false;
+			}
+			else return true;
 		}
 	}
 }

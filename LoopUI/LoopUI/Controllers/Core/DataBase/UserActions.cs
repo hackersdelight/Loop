@@ -59,12 +59,50 @@ namespace LoopUI.Controllers
 
 		public void AddUser(IUser user)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("INSERT INTO Users (Login, Password, Name, Surname, Email, IsActive, UserType) VALUES (@login, @password, @name, @surname, @email, @isactive, @usertype);");
+				command.Parameters = new SqlParameter[7];
+				command.Parameters[0] = new SqlParameter("login", user.Login);
+				command.Parameters[1] = new SqlParameter("password", user.Password);
+				command.Parameters[2] = new SqlParameter("name", user.Name);
+				command.Parameters[3] = new SqlParameter("surname", user.Surname);
+				command.Parameters[4] = new SqlParameter("email", user.Email);
+				command.Parameters[5] = new SqlParameter("isactive", user.IsActive.ToString());
+				command.Parameters[6] = new SqlParameter("usertype", (int)user.UserType);
+				command.Type = DbCommand.DbCommandType.INSERT;
+				connection.ExecNonQuery(command);
+				if (UserCollection != null)
+				{
+					UserCollection.Add(user);
+				}
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
-		public void DeleteUser(IUser user)
+		public void DeleteUser(int id)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("DELETE FROM Users WHERE Id = @id;");
+				command.Parameters = new SqlParameter[1];
+				command.Parameters[0] = new SqlParameter("id", id);
+				command.Type = DbCommand.DbCommandType.DELETE;
+				connection.ExecNonQuery(command);
+				if (UserCollection != null)
+				{
+					UserCollection.Remove(UserCollection.Find(x => x.Id == id));
+				}
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
 		public void EditUser(IUser user)

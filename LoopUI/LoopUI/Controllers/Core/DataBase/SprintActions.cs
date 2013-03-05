@@ -48,7 +48,7 @@ namespace LoopUI.Controllers
 		}
 
 
-		public void DeleteSprint(ISprint sprint)
+		public void DeleteSprint(int id)
 		{
 			throw new NotImplementedException();
 		}
