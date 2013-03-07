@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Loop.Interfaces;
+using LoopUI.Models;
 
 namespace LoopUI
 {
@@ -33,7 +35,9 @@ namespace LoopUI
 		protected void Application_Start()
 		{
 			AreaRegistration.RegisterAllAreas();
-
+			ModelBinders.Binders.Add(typeof(ITaskStatus), new TaskStatusBinder());
+			ModelBinders.Binders.Add(typeof(ITaskPriority), new TaskPriorityBinder());
+			ModelBinders.Binders.Add(typeof(IUser), new UserBinder());
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);
 		}

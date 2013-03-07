@@ -38,6 +38,11 @@ namespace LoopUI.Controllers
 					UserCollection.Add(CreateUserModelInstance(row));
 				}
 			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
 			finally
 			{
 				connection.CloseConnection();
@@ -78,6 +83,11 @@ namespace LoopUI.Controllers
 					UserCollection.Add(user);
 				}
 			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
 			finally
 			{
 				connection.CloseConnection();
@@ -98,6 +108,11 @@ namespace LoopUI.Controllers
 				{
 					UserCollection.Remove(UserCollection.Find(x => x.Id == id));
 				}
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
 			}
 			finally
 			{
@@ -128,6 +143,11 @@ namespace LoopUI.Controllers
 					UserCollection.Remove(UserCollection.Find(x => x.Id == user.Id));
 					UserCollection.Add(user);
 				}
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
 			}
 			finally
 			{

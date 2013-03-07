@@ -38,6 +38,11 @@ namespace LoopUI.Controllers
 						TasksCollection.Add(CreateTaskInstance(row));
 					}
 				}
+				catch (Exception e)
+				{
+					Logger.Instance.WriteToLog(e.Message);
+					throw;
+				}
 				finally
 				{
 					connection.CloseConnection();
@@ -61,6 +66,11 @@ namespace LoopUI.Controllers
 					{
 						TaskPrioritiesCollection.Add(CreateTaskPriorityInstance(row));
 					}
+				}
+				catch (Exception e)
+				{
+					Logger.Instance.WriteToLog(e.Message);
+					throw;
 				}
 				finally
 				{
@@ -86,6 +96,11 @@ namespace LoopUI.Controllers
 						TaskStatusesCollection.Add(CreateTaskStatusInstance(row));
 					}
 				}
+				catch (Exception e)
+				{
+					Logger.Instance.WriteToLog(e.Message);
+					throw;
+				}
 				finally
 				{
 					connection.CloseConnection();
@@ -96,12 +111,82 @@ namespace LoopUI.Controllers
 
 		public void AddTask(ITask task)
 		{
-			throw new System.NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				connection.BeginTransaction();
+				DbCommand command = new DbCommand("INSERT INTO Tasks (Title, Number, StatusId, PriorityId, Steps, [Description], Background, AssignmentId, Estimation, IsActive, [State]) VALUES (@title, @number, @statusid, @priorityid, @steps, @description, @background, @assignmentid, @estimation, @isactive, @state);");
+				command.Parameters = new SqlParameter[11];
+				command.Parameters[0] = new SqlParameter("title", task.Title);
+				command.Parameters[1] = new SqlParameter("number", task.Number);
+				command.Parameters[2] = new SqlParameter("statusid", task.Status.Id);
+				command.Parameters[3] = new SqlParameter("priorityid", task.Prioroty.Id);
+				command.Parameters[4] = new SqlParameter("steps", task.Steps);
+				command.Parameters[5] = new SqlParameter("description", task.Description);
+				command.Parameters[6] = new SqlParameter("background", task.Background);
+				command.Parameters[7] = new SqlParameter("assignmentid", task.Assignment.Id);
+				command.Parameters[8] = new SqlParameter("estimation", task.Estimation);
+				command.Parameters[9] = new SqlParameter("isactive", task.IsActive.ToString());
+				command.Parameters[10] = new SqlParameter("state", (int)task.State);
+				command.Type = DbCommand.DbCommandType.INSERT;
+				connection.ExecNonQuery(command);
+				DbCommand addComments = new DbCommand("INSERT INTO Comments (Comment, TaskId) SELECT @comment, Id FROM Tasks where Number = @tasknumber;");
+				addComments.Type = DbCommand.DbCommandType.INSERT;
+				foreach (string comment in task.Comments)
+				{
+					addComments.Parameters = new SqlParameter[2];
+					addComments.Parameters[0] = new SqlParameter("comment", comment);
+					addComments.Parameters[1] = new SqlParameter("tasknumber", task.Number);
+					connection.ExecNonQuery(addComments);
+				}
+				connection.CommitTransaction();
+				TasksCollection = null;
+			}
+			catch (Exception e)
+			{
+				connection.RollbackTransaction();
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
 		public void DeleteTask(int id)
 		{
-			throw new System.NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				connection.BeginTransaction();
+				DbCommand command = new DbCommand("DELETE FROM Tasks WHERE Id = @id;");
+				command.Parameters = new SqlParameter[1];
+				command.Parameters[0] = new SqlParameter("id", id);
+				command.Type = DbCommand.DbCommandType.DELETE;
+				connection.ExecNonQuery(command);
+
+				DbCommand comments = new DbCommand("DELETE FROM Comments WHERE TaskId = @id;");
+				comments.Parameters = new SqlParameter[1];
+				comments.Parameters[0] = new SqlParameter("id", id);
+				comments.Type = DbCommand.DbCommandType.DELETE;
+				connection.ExecNonQuery(comments);
+				connection.CommitTransaction();
+				if (TasksCollection != null)
+				{
+					TasksCollection.Remove(TasksCollection.Find(x => x.Id == id));
+				}
+			}
+			catch (Exception e)
+			{
+				connection.RollbackTransaction();
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
 		public void EditTask(ITask task)
@@ -158,6 +243,11 @@ namespace LoopUI.Controllers
 					result.Add(row["Comment"].ToString());
 				}
 			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
 			finally
 			{
 				connection.CloseConnection();
@@ -200,7 +290,7 @@ namespace LoopUI.Controllers
 				Estimation = Convert.ToInt32(row["Estimation"]),
 				Assignment = DataStorage.Instance.UserActions.GetUserById(Convert.ToInt32(row["AssignmentId"])),
 				Status = GetTaskStatusById(Convert.ToInt32(row["StatusId"])),
-				State = (StatusState)Convert.ToInt32(row["State"]) ,
+				State = (StatusState)Convert.ToInt32(row["State"]),
 				Prioroty = GetTaskPriorityById(Convert.ToInt32(row["PriorityId"])),
 				Comments = GetCommentsListByTaskId(Convert.ToInt32(row["Id"]))
 			};

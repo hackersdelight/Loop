@@ -66,24 +66,38 @@ namespace LoopUI.Controllers
 		{
 			return DataStorage.Instance.SprintActions.GetAllSprints();
 		}
-	}
-	public static class EnumExtensions
-	{
-		public static IEnumerable<SelectListItem> ToSelectList(this Enum enumValue)
+
+		internal SelectList GetTaskPriorityList()
 		{
-			return from Enum e in Enum.GetValues(enumValue.GetType())
-						 select new SelectListItem
-						 {
-							 Selected = e.Equals(enumValue),
-							 Text = e.ToDescription(),
-							 Value = e.ToString()
-						 };
+			List<SelectListItem> result = new List<SelectListItem>();
+			List<ITaskPriority> list = DataStorage.Instance.TaskActions.GetAllTaskPriorities();
+			foreach (ITaskPriority t in list)
+			{
+				result.Add(new SelectListItem() { Text = t.Title, Value = t.Id.ToString() });
+			}
+			return new SelectList(result, "Value", "Text");
 		}
 
-		public static string ToDescription(this Enum value)
+		internal SelectList GetTaskStatusList()
 		{
-			var attributes = (DescriptionAttribute[])value.GetType().GetField(value.ToString()).GetCustomAttributes(typeof(DescriptionAttribute), false);
-			return attributes.Length > 0 ? attributes[0].Description : value.ToString();
+			List<SelectListItem> result = new List<SelectListItem>();
+			List<ITaskStatus> list = DataStorage.Instance.TaskActions.GetAllTaskStatuses();
+			foreach (ITaskStatus t in list)
+			{
+				result.Add(new SelectListItem() { Text = t.Title, Value = t.Id.ToString() });
+			}
+			return new SelectList(result, "Value", "Text");
+		}
+
+		internal SelectList GetActiveUsers()
+		{
+			List<SelectListItem> result = new List<SelectListItem>();
+			List<IUser> list = DataStorage.Instance.UserActions.GetActiveUsers();
+			foreach (IUser t in list)
+			{
+				result.Add(new SelectListItem() { Text = t.Name +" "+t.Surname, Value = t.Id.ToString() });
+			}
+			return new SelectList(result, "Value", "Text");
 		}
 	}
 }

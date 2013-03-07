@@ -3,12 +3,43 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Loop.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace LoopUI.Models
 {
 	public class Task: ITask
 	{
-		public IUser Assignment
+		public int Id
+		{
+			get;
+			set;
+		}
+
+		[Required(ErrorMessage = "Number is required")]
+		[StringLength(20, ErrorMessage = "Number shouldn't be longer than 20 characters.")]
+		public string Number
+		{
+			get;
+			set;
+		}
+
+		[Required(ErrorMessage = "Title is required")]
+		[StringLength(64, ErrorMessage = "Title shouldn't be longer than 64 characters.")]
+		public string Title
+		{
+			get;
+			set;
+		}
+
+		[Required(ErrorMessage = "Description is required")]
+		public string Description
+		{
+			get;
+			set;
+		}
+
+		[Required(ErrorMessage = "Steps are required")]
+		public string Steps
 		{
 			get;
 			set;
@@ -20,25 +51,38 @@ namespace LoopUI.Models
 			set;
 		}
 
-		public List<string> Comments
+		public ITaskStatus Status
 		{
 			get;
 			set;
 		}
 
-		public string Description
+		public Loop.Enumerations.StatusState State
 		{
 			get;
 			set;
 		}
 
+		public ITaskPriority Prioroty
+		{
+			get;
+			set;
+		}
+
+		public IUser Assignment
+		{
+			get;
+			set;
+		}
+
+		[Required(ErrorMessage = "Description is required")]
 		public int Estimation
 		{
 			get;
 			set;
 		}
 
-		public int Id
+		public List<string> Comments
 		{
 			get;
 			set;
@@ -50,43 +94,5 @@ namespace LoopUI.Models
 			set;
 		}
 
-		public string Number
-		{
-			get;
-			set;
-		}
-
-		public string Steps
-		{
-			get;
-			set;
-		}
-
-		public string Title
-		{
-			get;
-			set;
-		}
-
-
-		public ITaskStatus Status
-		{
-			get;
-			set;
-		}
-
-
-		public ITaskPriority Prioroty
-		{
-			get;
-			set;
-		}
-
-
-		public Loop.Enumerations.StatusState State
-		{
-			get;
-			set;
-		}
 	}
 }

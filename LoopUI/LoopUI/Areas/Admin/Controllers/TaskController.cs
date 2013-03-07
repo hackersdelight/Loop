@@ -51,21 +51,38 @@ namespace LoopUI.Areas.Admin.Controllers
 
 		public ActionResult DeleteTask(int id)
 		{
+			DataStorage.Instance.TaskActions.DeleteTask(id);
 			return RedirectToAction("Index");
 		}
 
 		[HttpGet]
 		public ActionResult AddTask()
 		{
+			ViewBag.TaskPriority = CoreWrapper.Instance.GetTaskPriorityList();
+			ViewBag.TaskStatus = CoreWrapper.Instance.GetTaskStatusList();
+			ViewBag.ActiveUsers = CoreWrapper.Instance.GetActiveUsers();
+			Task t = new Task();
+			t.Status = new TaskStatus();
+			t.Prioroty = new TaskPriority();
 			return View();
 		}
 
 		[HttpPost]
-		public ActionResult AddTask(Task task)
+		public ActionResult AddTask(Task task, string comment)
 		{
 			//validation
 			//adding of new task
-			return RedirectToAction("Index");
+			if (ModelState.IsValid)
+			{
+				if (!String.IsNullOrEmpty(comment))
+				{
+					task.Comments = new List<string>();
+					task.Comments.Add(comment);
+				}
+				DataStorage.Instance.TaskActions.AddTask(task);
+				return RedirectToAction("Index");
+			}
+			else return AddTask();
 		}
 
 		public ActionResult StartTask(int id)
