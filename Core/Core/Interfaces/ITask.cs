@@ -18,7 +18,7 @@ namespace Loop.Interfaces
 		bool IsActive { get; }
 		IUser Assignment { get; }
 		int Estimation { get; }
-		List<string> Comments { get; }
+		List<IComment> Comments { get; }
 	}
 
 	public interface IRegression : ITask

@@ -82,7 +82,7 @@ namespace LoopUI.Models
 			set;
 		}
 
-		public List<string> Comments
+		public List<IComment> Comments
 		{
 			get;
 			set;

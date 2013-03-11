@@ -1,0 +1,174 @@
+﻿@model LoopUI.Models.Task
+@{
+	ViewBag.Title = "Edit task";
+	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function () {
+		$("#accordion").accordion();
+	});
+
+	function GridLoaded() {
+		var grid = $("#comment");
+		//decide by task state if additional option should be added.
+
+		grid.navButtonAdd("#commentpager", {
+			caption: "Add comment",
+			buttonicon: "ui-icon-add",
+			onClickButton: function () {
+				var value = window.showModalDialog('@Url.Content("~/Content/AddComment.html")', null, "dialogWidth:300px; dialogHeight:250px; center:yes");
+				var data = { taskId: '@Url.RequestContext.RouteData.Values["id"]', comment: value }; //declare object
+				SendRequest(JSON.stringify(data), '@Url.Action("AddComment", "Task")');
+			},
+			position: "last"
+		});
+	}
+</script>
+<div id="accordion">
+	<h3>
+		Task
+	</h3>
+	<div>
+		@using (Html.BeginForm("EditTask", "Task"))
+	{
+			@Html.ValidationSummary(true)
+			@Html.HiddenFor(model => model.Id)
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Number)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.Number)
+				@Html.ValidationMessageFor(model => model.Number)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Title)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.Title)
+				@Html.ValidationMessageFor(model => model.Title)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Description)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.Description)
+				@Html.ValidationMessageFor(model => model.Description)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Steps)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.Steps)
+				@Html.ValidationMessageFor(model => model.Steps)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Background)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.Background)
+				@Html.ValidationMessageFor(model => model.Background)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.Estimation)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.Estimation)
+				@Html.ValidationMessageFor(model => model.Estimation)
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(x => x.Prioroty)
+			</div>
+			<div class="editor-field">
+				@if (ViewBag.TaskPriority != null)
+		{
+					@Html.DropDownListFor(model => model.Prioroty.Id, new SelectList(ViewBag.TaskPriority, "Value", "Text"));
+		}
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(x => x.Status)
+			</div>
+			<div class="editor-field">
+				@if (ViewBag.TaskStatus != null)
+		{
+					@Html.DropDownListFor(x => x.Status.Id, new SelectList(ViewBag.TaskStatus, "Value", "Text"));
+		}
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(x => x.Assignment)
+			</div>
+			<div class="editor-field">
+				@if (ViewBag.TaskStatus != null)
+		{
+					@Html.DropDownListFor(x => x.Assignment.Id, new SelectList(ViewBag.ActiveUsers, "Value", "Text"));
+		}
+			</div>
+			<div class="editor-label">
+				@Html.LabelFor(model => model.IsActive)
+			</div>
+			<div class="editor-field">
+				@Html.EditorFor(model => model.IsActive)
+				@Html.ValidationMessageFor(model => model.IsActive)
+			</div>
+			<p>
+				<input type="submit" value="Save" />
+			</p>
+	}
+	</div>
+	<h3>
+		Comments
+	</h3>
+	<div>
+	<table id="comment" class="scroll" cellpadding="0" cellspacing="0">
+	</table>
+	<div id="commentpager" class="scroll" style="text-align: center;">
+	</div>
+	@using Mvc.HtmlHelpers
+@(Html.jqGrid("comment")
+	.addColumn(new Column("comment").setLabel("Comment")
+			.setSortable(true)
+			.setFixed(true)
+			.setAlign(Align.center)
+			.setWidth(480)
+			.setEditable(true))
+		.addColumn(new Column("actions").setLabel("Actions")
+			.setSortable(false)
+			.setAlign(Align.left)
+			.setEditable(false)
+			.setWidth(80)
+			.setFormatter(Formatters.actions))
+			// settings
+		.setCaption("Comments")
+		.setRequestType(RequestType.get)
+		.setUrl(Url.Action("GetTaskComments", "Task", new RouteValueDictionary(new { id = Url.RequestContext.RouteData.Values["id"] })))
+		.setAltRows(true)
+		.setAltClass("altGridRows")
+		.setAutoWidth(true)
+		.setWidth(550)
+		.setHeight(250)
+		.setRowNum(10)
+		.setRowList(new int[] { 10, 15, 20, 50 })
+		.setViewRecords(true)
+		.setSortName("Comment")
+		.setSortOrder(SortOrder.asc)
+		.setPager("commentpager")
+		.setPgButtons(true)
+		.setCellEdit(true)
+		.setEditUrl(Url.Action("CommentOperation", "Task"))
+		.setCellSubmit(CellSubmit.clientArray)
+		.setNavAdd(true)
+		.Render()
+	)
+
+
+
+
+
+
+
+	</div>
+</div>
+<div>
+	@Html.ActionLink("Back to List", "Index")
+</div>

@@ -97,6 +97,7 @@
 		.setCellEdit(true)
 		.setEditUrl(Url.Action("TaskOperation", "Task"))
 		.setCellSubmit(CellSubmit.clientArray)
+		.onDblClickRow("document.location.href = '/Admin/Task/EditTask/' + rowid.toString();")
 		.onLoadComplete("GridLoaded();")
 		.Render()
 )

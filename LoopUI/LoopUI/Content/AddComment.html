@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Add new comment</title>
+	<script type="text/javascript">
+		function onOkClick() {
+			window.returnValue = document.getElementById("value").value;
+			window.close();
+		}
+	</script>
+</head>
+<body>
+	<div>
+		<label for="value">
+			Comment:</label>
+		<br />
+		<textarea id="value" cols="30" rows="10"/></textarea>
+	</div>
+	<div>
+		<button id="ok" onclick="onOkClick()">
+			Ok
+		</button>
+	</div>
+</body>
+</html>

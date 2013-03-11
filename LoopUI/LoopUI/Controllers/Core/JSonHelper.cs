@@ -183,5 +183,24 @@ namespace LoopUI.Helpers
 			};
 			return result;
 		}
+
+		internal static object GetJSonForComments(IEnumerable<IComment> comments, int page, int count, int pageCount)
+		{
+			var result = new
+			{
+				total = pageCount,
+				page,
+				records = count,
+				rows = comments.Select(x => new
+				{
+					id = x.Id,
+					cell = new[]
+					{
+							x.Value
+					}
+				})
+			};
+			return result;
+		}
 	}
 }

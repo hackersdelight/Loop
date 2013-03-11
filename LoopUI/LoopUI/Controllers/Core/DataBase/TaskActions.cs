@@ -132,10 +132,10 @@ namespace LoopUI.Controllers
 				connection.ExecNonQuery(command);
 				DbCommand addComments = new DbCommand("INSERT INTO Comments (Comment, TaskId) SELECT @comment, Id FROM Tasks where Number = @tasknumber;");
 				addComments.Type = DbCommand.DbCommandType.INSERT;
-				foreach (string comment in task.Comments)
+				foreach (IComment comment in task.Comments)
 				{
 					addComments.Parameters = new SqlParameter[2];
-					addComments.Parameters[0] = new SqlParameter("comment", comment);
+					addComments.Parameters[0] = new SqlParameter("comment", comment.Value);
 					addComments.Parameters[1] = new SqlParameter("tasknumber", task.Number);
 					connection.ExecNonQuery(addComments);
 				}
@@ -191,7 +191,109 @@ namespace LoopUI.Controllers
 
 		public void EditTask(ITask task)
 		{
-			throw new System.NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("UPDATE Tasks SET Title = @title, Number = @number, StatusId = @statusid, PriorityId = @priorityid, Steps = @steps, [Description] = @description, Background = @background, AssignmentId = @assignmentid, Estimation = @estimation, IsActive = @isactive, [State] = @state WHERE Id = @id;");
+				command.Parameters = new SqlParameter[12];
+				command.Parameters[0] = new SqlParameter("title", task.Title);
+				command.Parameters[1] = new SqlParameter("number", task.Number);
+				command.Parameters[2] = new SqlParameter("statusid", task.Status.Id);
+				command.Parameters[3] = new SqlParameter("priorityid", task.Prioroty.Id);
+				command.Parameters[4] = new SqlParameter("steps", task.Steps);
+				command.Parameters[5] = new SqlParameter("description", task.Description);
+				command.Parameters[6] = new SqlParameter("background", task.Background);
+				command.Parameters[7] = new SqlParameter("assignmentid", task.Assignment.Id);
+				command.Parameters[8] = new SqlParameter("estimation", task.Estimation);
+				command.Parameters[9] = new SqlParameter("isactive", task.IsActive.ToString());
+				command.Parameters[10] = new SqlParameter("state", (int)task.State);
+				command.Parameters[11] = new SqlParameter("id", (int)task.Id);
+				command.Type = DbCommand.DbCommandType.UPDATE;
+				connection.ExecNonQuery(command);
+				if (TasksCollection != null)
+				{
+					//update value in Collection
+					TasksCollection.Remove(TasksCollection.Find(x => x.Id == task.Id));
+					TasksCollection.Add(task);
+				}
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
+		}
+
+		internal void EditComment(IComment comment)
+		{
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("UPDATE Comments SET Comment = @comment WHERE Id = @id;");
+				command.Parameters = new SqlParameter[2];
+				command.Parameters[0] = new SqlParameter("comment", comment.Value);
+				command.Parameters[1] = new SqlParameter("id", comment.Id);
+				command.Type = DbCommand.DbCommandType.UPDATE;
+				connection.ExecNonQuery(command);
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
+		}
+
+		internal void DeleteComment(int id)
+		{
+			try
+			{
+				connection.OpenConnection();
+				DbCommand comments = new DbCommand("DELETE FROM Comments WHERE Id = @id;");
+				comments.Parameters = new SqlParameter[1];
+				comments.Parameters[0] = new SqlParameter("id", id);
+				comments.Type = DbCommand.DbCommandType.DELETE;
+				connection.ExecNonQuery(comments);
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
+		}
+
+		internal void AddComment(int taskId, string comment)
+		{
+			try
+			{
+				connection.OpenConnection();
+				DbCommand addComments = new DbCommand("INSERT INTO Comments (Comment, TaskId) VALUES (@comment, @taskid);");
+				addComments.Type = DbCommand.DbCommandType.INSERT;
+				addComments.Parameters = new SqlParameter[2];
+				addComments.Parameters[0] = new SqlParameter("comment", comment);
+				addComments.Parameters[1] = new SqlParameter("taskid", taskId);
+				connection.ExecNonQuery(addComments);
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.Message);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
 		public ITask GetTaskById(int id)
@@ -227,9 +329,9 @@ namespace LoopUI.Controllers
 			return null;
 		}
 
-		private List<string> GetCommentsListByTaskId(int id)
+		internal List<IComment> GetCommentsListByTaskId(int id)
 		{
-			List<string> result = new List<string>();
+			List<IComment> result = new List<IComment>();
 			try
 			{
 				connection.OpenConnection();
@@ -240,7 +342,7 @@ namespace LoopUI.Controllers
 				DataSet set = connection.ExecSelect(command);
 				foreach (DataRow row in set.Tables[0].Rows)
 				{
-					result.Add(row["Comment"].ToString());
+					result.Add(CreateCommentInstance(row));
 				}
 			}
 			catch (Exception e)
@@ -264,6 +366,16 @@ namespace LoopUI.Controllers
 				Value = Convert.ToInt32(row["Value"])
 			};
 			return t;
+		}
+
+		private IComment CreateCommentInstance(DataRow row)
+		{
+			Comment c = new Comment()
+			{
+				Id = Convert.ToInt32(row["Id"]),
+				Value = row["Comment"].ToString()
+			};
+			return c;
 		}
 
 		private ITaskStatus CreateTaskStatusInstance(DataRow row)

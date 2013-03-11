@@ -7,6 +7,9 @@ using LoopUI.Models;
 using LoopUI.Helpers;
 using Loop.Interfaces;
 using LoopUI.Controllers;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
+using System.Web.Routing;
 
 namespace LoopUI.Areas.Admin.Controllers
 {
@@ -14,6 +17,8 @@ namespace LoopUI.Areas.Admin.Controllers
 	{
 		//
 		// GET: /Admin/Task/
+
+		private TaskActions taskActions = DataStorage.Instance.TaskActions as TaskActions;
 
 		public ActionResult Index()
 		{
@@ -27,14 +32,45 @@ namespace LoopUI.Areas.Admin.Controllers
 		public ActionResult GetTasks()
 		{
 			//Json(JSonConverters.GetJsonForUsers(users, page, total, total / rows + 1), JsonRequestBehavior.AllowGet);
-			return Json(JSonHelper.GetJSonForTasks(CoreWrapper.Instance.GetAllTasks(), 1, 1, 1),JsonRequestBehavior.AllowGet);
+			return Json(JSonHelper.GetJSonForTasks(CoreWrapper.Instance.GetAllTasks(), 1, 1, 1), JsonRequestBehavior.AllowGet);
 		}
 
-		public ActionResult TaskOperation(int id, string title, string priority, string assignment, string isactive, string oper)
+		public ActionResult GetTaskComments(int id)
+		{
+			return Json(JSonHelper.GetJSonForComments(taskActions.GetCommentsListByTaskId(id), 1, 1, 1), JsonRequestBehavior.AllowGet);
+		}
+
+		public ActionResult CommentOperation([Optional]int id, string comment, string oper)
 		{
 			if (oper == "edit")
 			{
-				return EditTask(id, title, priority, assignment, isactive);
+				Comment c = new Comment(id, comment);
+				return EditComment(c);
+			}
+			else if (oper == "del")
+			{
+				return DeleteComment(id);
+			}
+			else if (oper == "add")
+			{
+				return AddComment(Convert.ToInt32(RouteData.Values["id"]), comment);
+			}
+			else return RedirectToAction("EditTask");
+		}
+
+		public ActionResult TaskOperation(int id, string title, int priority, int assignment, string isactive, string oper)
+		{
+			if (oper == "edit")
+			{
+				Task t = new Task()
+				{
+					Id = id,
+					Title = title,
+					Prioroty = new TaskPriority() { Id = priority },
+					Assignment = new LoopUI.Models.User() { Id = assignment },
+					IsActive = Convert.ToBoolean(isactive)
+				};
+				return EditTask(t);
 			}
 			else if (oper == "del")
 			{
@@ -44,14 +80,51 @@ namespace LoopUI.Areas.Admin.Controllers
 				return RedirectToAction("Index");
 		}
 
-		public ActionResult EditTask(int id, string title, string priority, string assignment, string isactive)
+		[HttpGet]
+		public ActionResult EditTask(int id)
 		{
-			return RedirectToAction("Index");
+			ViewBag.TaskPriority = CoreWrapper.Instance.GetTaskPriorityList();
+			ViewBag.TaskStatus = CoreWrapper.Instance.GetTaskStatusList();
+			ViewBag.ActiveUsers = CoreWrapper.Instance.GetActiveUsers();
+			return View(taskActions.GetTaskById(id) as Task);
+		}
+
+		[HttpPost]
+		public ActionResult EditTask(Task task)
+		{
+			if (ModelState.IsValid)
+			{
+				taskActions.EditTask(task);
+				return View("Index");
+			}
+			else
+			{
+				return View();
+			}
+		}
+
+		[HttpPost]
+		public ActionResult EditComment(Comment comment)
+		{
+			taskActions.EditComment(comment);
+			return View("EditTask");
+		}
+
+		public ActionResult DeleteComment(int id)
+		{
+			taskActions.DeleteComment(id);
+			return View("EditTask");
+		}
+
+		public ActionResult AddComment(int taskId, string comment)
+		{
+			taskActions.AddComment(Convert.ToInt32(taskId), Convert.ToString(comment));
+			return View("EditTask");
 		}
 
 		public ActionResult DeleteTask(int id)
 		{
-			DataStorage.Instance.TaskActions.DeleteTask(id);
+			taskActions.DeleteTask(id);
 			return RedirectToAction("Index");
 		}
 
@@ -76,10 +149,10 @@ namespace LoopUI.Areas.Admin.Controllers
 			{
 				if (!String.IsNullOrEmpty(comment))
 				{
-					task.Comments = new List<string>();
-					task.Comments.Add(comment);
+					task.Comments = new List<IComment>();
+					task.Comments.Add(new Comment(comment));
 				}
-				DataStorage.Instance.TaskActions.AddTask(task);
+				taskActions.AddTask(task);
 				return RedirectToAction("Index");
 			}
 			else return AddTask();
