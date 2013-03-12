@@ -13,14 +13,15 @@
 	function GridLoaded() {
 		var grid = $("#comment");
 		//decide by task state if additional option should be added.
-
 		grid.navButtonAdd("#commentpager", {
-			caption: "Add comment",
-			buttonicon: "ui-icon-add",
+			caption: "",
+			title: "Add comment",
+			buttonicon: "ui-icon-plusthick",
 			onClickButton: function () {
 				var value = window.showModalDialog('@Url.Content("~/Content/AddComment.html")', null, "dialogWidth:300px; dialogHeight:250px; center:yes");
 				var data = { taskId: '@Url.RequestContext.RouteData.Values["id"]', comment: value }; //declare object
 				SendRequest(JSON.stringify(data), '@Url.Action("AddComment", "Task")');
+				$("#comment").trigger("reloadGrid");
 			},
 			position: "last"
 		});
@@ -155,18 +156,14 @@
 		.setPager("commentpager")
 		.setPgButtons(true)
 		.setCellEdit(true)
+		.setNavAdd(false)
+		.setNavEdit(false)
+		.setNavDel(false)
+		.setDocumentReadyJavaScript("GridLoaded();")
 		.setEditUrl(Url.Action("CommentOperation", "Task"))
 		.setCellSubmit(CellSubmit.clientArray)
-		.setNavAdd(true)
 		.Render()
 	)
-
-
-
-
-
-
-
 	</div>
 </div>
 <div>
