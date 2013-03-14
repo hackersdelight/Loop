@@ -3,6 +3,23 @@
 	ViewBag.Title = "Risks";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<script type="text/javascript">
+	function GridLoaded() {
+		var grid = $("#risk");
+
+		grid.jqGrid('setGridParam', { onSelectRow: function (id) { return false; } });
+
+		grid.navButtonAdd("#riskpager", {
+			caption: "",
+			title: "Add sprint",
+			buttonicon: "ui-icon-plusthick",
+			onClickButton: function () {
+				document.location.href = '/Admin/Risk/AddRisk';
+			},
+			position: "last"
+		});
+	}
+</script>
 <table id="risk" class="scroll" cellpadding="0" cellspacing="0">
 </table>
 <div id="riskpager" class="scroll" style="text-align: center;">
@@ -11,13 +28,16 @@
 @(Html.jqGrid("risk")
 		.addColumn(new Column("title").setLabel("Title")
 		.setSortable(true)
-		.setWidth(50))
+		.setAlign(Align.center)
+		.setEditable(true)
+		.setWidth(420))
 		.addColumn(new Column("type").setLabel("Type")
 		.setEditType(EditType.select)
+		.setAlign(Align.center)
 		.setEditOptions("value: $('#RiskType').val()")
 		.setEditRules("required: true")
 		.setEditable(true)
-		.setWidth(80))
+		.setWidth(100))
 		.addColumn(new Column("actions").setLabel("Actions")
 		.setSortable(false)
 		.setAlign(Align.left)
@@ -33,6 +53,7 @@
 		.setAltClass("altGridRows")
 		.setAutoWidth(true)
 		.setHeight(250)
+		.setWidth(600)
 		.setRowNum(10)
 		.setRowList(new int[] { 10, 15, 20, 50 })
 		.setViewRecords(true)
@@ -42,6 +63,12 @@
 		.setPgButtons(true)
 		.setCellEdit(false)
 		.setCellSubmit(CellSubmit.clientArray)
+		.setNavAdd(false)
+		.setNavDel(false)
+		.setNavEdit(false)
+		.setEditUrl(Url.Action("RiskOperation", "Sprint"))
+		.onDblClickRow("document.location.href = '/Admin/Risk/EditRisk/' + rowid.toString();")
+		.setDocumentReadyJavaScript("GridLoaded();")
 		.Render()
 )
 @Html.HiddenFor(m => m.RiskType)
