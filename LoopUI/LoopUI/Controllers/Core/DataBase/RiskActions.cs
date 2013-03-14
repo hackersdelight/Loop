@@ -25,7 +25,27 @@ namespace LoopUI.Controllers
 
 		public void AddRisk(IRisk risk)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("INSERT INTO Risks (Title, TypeId) VALUES (@title, @typeid);");
+				command.Parameters = new SqlParameter[2];
+				command.Parameters[0] = new SqlParameter("title", risk.Title);
+				command.Parameters[1] = new SqlParameter("typeid", risk.Type.Id);
+				command.Type = DbCommand.DbCommandType.INSERT;
+				connection.ExecNonQuery(command);
+				//collection doesn't contain user Id here;
+				RiskCollection = null;
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.StackTrace);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
 		public List<IRisk> GetAllRisks()
@@ -79,7 +99,28 @@ namespace LoopUI.Controllers
 
 		public void DeleteRisk(int id)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("DELETE FROM Risks WHERE Id = @id;");
+				command.Parameters = new SqlParameter[1];
+				command.Parameters[0] = new SqlParameter("id", id);
+				command.Type = DbCommand.DbCommandType.DELETE;
+				connection.ExecNonQuery(command);
+				if (RiskCollection != null)
+				{
+					RiskCollection.Remove(RiskCollection.Find(x => x.Id == id));
+				}
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.StackTrace);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
 		public void EditRisk(IRisk risk)
