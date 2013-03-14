@@ -21,7 +21,27 @@ namespace LoopUI.Controllers
 
 		public void AddSprint(ISprint sprint)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("INSERT INTO Sprints (KeyedName, IsActive) VALUES (@keyedname, @isactive);");
+				command.Parameters = new SqlParameter[2];
+				command.Parameters[0] = new SqlParameter("keyedname", sprint.KeyedName);
+				command.Parameters[1] = new SqlParameter("isactive", sprint.IsActive.ToString());
+				command.Type = DbCommand.DbCommandType.INSERT;
+				connection.ExecNonQuery(command);
+				//collection doesn't contain user Id here;
+				SprintsCollection = null;
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.StackTrace);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 		public List<ISprint> GetAllSprints()
 		{
@@ -50,12 +70,58 @@ namespace LoopUI.Controllers
 
 		public void DeleteSprint(int id)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("DELETE FROM Sprints WHERE Id = @id;");
+				command.Parameters = new SqlParameter[1];
+				command.Parameters[0] = new SqlParameter("id", id);
+				command.Type = DbCommand.DbCommandType.DELETE;
+				connection.ExecNonQuery(command);
+				if (SprintsCollection != null)
+				{
+					SprintsCollection.Remove(SprintsCollection.Find(x => x.Id == id));
+				}
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.StackTrace);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
 		public void EditSprint(ISprint sprint)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				connection.OpenConnection();
+				DbCommand command = new DbCommand("UPDATE Sprints SET KeyedName = @keyedname, IsActive = @isactive WHERE Id = @id;");
+				command.Parameters = new SqlParameter[3];
+				command.Parameters[0] = new SqlParameter("id", sprint.Id);
+				command.Parameters[1] = new SqlParameter("keyedname", sprint.KeyedName);
+				command.Parameters[2] = new SqlParameter("isactive", sprint.IsActive.ToString());
+				command.Type = DbCommand.DbCommandType.UPDATE;
+				connection.ExecNonQuery(command);
+				if (SprintsCollection != null)
+				{
+					//update value in Collection
+					SprintsCollection.Remove(SprintsCollection.Find(x => x.Id == sprint.Id));
+					SprintsCollection.Add(sprint);
+				}
+			}
+			catch (Exception e)
+			{
+				Logger.Instance.WriteToLog(e.StackTrace);
+				throw;
+			}
+			finally
+			{
+				connection.CloseConnection();
+			}
 		}
 
 		public ISprint GetSprintById(int id)

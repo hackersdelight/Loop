@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Loop.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace LoopUI.Models
 {
@@ -14,6 +15,8 @@ namespace LoopUI.Models
 			set;
 		}
 
+		[Required(ErrorMessage = "Keyed name is required")]
+		[StringLength(64, ErrorMessage = "Keyed name shouldn't be longer than 64 characters.")]
 		public string KeyedName
 		{
 			get;

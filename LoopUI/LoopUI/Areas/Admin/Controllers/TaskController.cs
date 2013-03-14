@@ -62,14 +62,10 @@ namespace LoopUI.Areas.Admin.Controllers
 		{
 			if (oper == "edit")
 			{
-				Task t = new Task()
-				{
-					Id = id,
-					Title = title,
-					Prioroty = new TaskPriority() { Id = priority },
-					Assignment = new LoopUI.Models.User() { Id = assignment },
-					IsActive = Convert.ToBoolean(isactive)
-				};
+				Task t = taskActions.GetTaskById(id) as Models.Task;
+				t.Title = title;
+				t.Prioroty =  new TaskPriority() { Id = priority };
+				t.Assignment = new LoopUI.Models.User() { Id = assignment };
 				return EditTask(t);
 			}
 			else if (oper == "del")

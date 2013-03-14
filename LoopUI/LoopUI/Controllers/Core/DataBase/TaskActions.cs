@@ -40,7 +40,7 @@ namespace LoopUI.Controllers
 				}
 				catch (Exception e)
 				{
-					Logger.Instance.WriteToLog(e.Message);
+					Logger.Instance.WriteToLog(e.StackTrace);
 					throw;
 				}
 				finally
@@ -69,7 +69,7 @@ namespace LoopUI.Controllers
 				}
 				catch (Exception e)
 				{
-					Logger.Instance.WriteToLog(e.Message);
+					Logger.Instance.WriteToLog(e.StackTrace);
 					throw;
 				}
 				finally
@@ -98,7 +98,7 @@ namespace LoopUI.Controllers
 				}
 				catch (Exception e)
 				{
-					Logger.Instance.WriteToLog(e.Message);
+					Logger.Instance.WriteToLog(e.StackTrace);
 					throw;
 				}
 				finally
@@ -145,7 +145,7 @@ namespace LoopUI.Controllers
 			catch (Exception e)
 			{
 				connection.RollbackTransaction();
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -180,7 +180,7 @@ namespace LoopUI.Controllers
 			catch (Exception e)
 			{
 				connection.RollbackTransaction();
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -219,7 +219,7 @@ namespace LoopUI.Controllers
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -242,7 +242,7 @@ namespace LoopUI.Controllers
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -264,7 +264,7 @@ namespace LoopUI.Controllers
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -287,7 +287,7 @@ namespace LoopUI.Controllers
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -347,7 +347,7 @@ namespace LoopUI.Controllers
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally

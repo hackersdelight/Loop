@@ -40,7 +40,7 @@ namespace LoopUI.Controllers
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -78,14 +78,12 @@ namespace LoopUI.Controllers
 				command.Parameters[6] = new SqlParameter("usertype", (int)user.UserType);
 				command.Type = DbCommand.DbCommandType.INSERT;
 				connection.ExecNonQuery(command);
-				if (UserCollection != null)
-				{
-					UserCollection.Add(user);
-				}
+				//collection doesn't contain user Id here;
+				UserCollection = null;
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -111,7 +109,7 @@ namespace LoopUI.Controllers
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally
@@ -146,7 +144,7 @@ namespace LoopUI.Controllers
 			}
 			catch (Exception e)
 			{
-				Logger.Instance.WriteToLog(e.Message);
+				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
 			finally

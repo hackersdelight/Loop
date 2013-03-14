@@ -3,6 +3,23 @@
 	ViewBag.Title = "Sprints";
 	Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<script type="text/javascript">
+	function GridLoaded() {
+		var grid = $("#sprint");
+
+		grid.jqGrid('setGridParam', { onSelectRow: function (id) { return false; } });
+
+		grid.navButtonAdd("#sprintpager", {
+			caption: "",
+			title: "Add sprint",
+			buttonicon: "ui-icon-plusthick",
+			onClickButton: function () {
+				document.location.href = '/Admin/Sprint/AddSprint';
+			},
+			position: "last"
+		});
+	}
+</script>
 <table id="sprint" class="scroll" cellpadding="0" cellspacing="0">
 </table>
 <div id="sprintpager" class="scroll" style="text-align: center;">
@@ -11,6 +28,8 @@
 @(Html.jqGrid("sprint")
 		.addColumn(new Column("keyedname").setLabel("Keyed Name")
 		.setSortable(true)
+		.setAlign(Align.center)
+		.setEditable(true)
 		.setWidth(50))
 		.addColumn(new Column("isactive").setLabel("Active")
 		.setEditType(EditType.checkbox)
@@ -40,8 +59,11 @@
 		.setSortName("Title")
 		.setSortOrder(SortOrder.asc)
 		.setPager("sprintpager")
+		.onDblClickRow("document.location.href = '/Admin/Sprint/EditSprint/' + rowid.toString();")
 		.setPgButtons(true)
-		.setCellEdit(true)
+		.setEditUrl(Url.Action("SprintOperation", "Sprint"))
+		.setCellEdit(false)
 		.setCellSubmit(CellSubmit.clientArray)
+		.setDocumentReadyJavaScript("GridLoaded();")
 		.Render()
 )

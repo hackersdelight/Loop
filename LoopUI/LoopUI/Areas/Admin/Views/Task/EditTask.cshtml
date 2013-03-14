@@ -12,6 +12,7 @@
 
 	function GridLoaded() {
 		var grid = $("#comment");
+		grid.jqGrid('setGridParam', { onSelectRow: function (id) { return false; } });
 		//decide by task state if additional option should be added.
 		grid.navButtonAdd("#commentpager", {
 			caption: "",
@@ -155,7 +156,7 @@
 		.setSortOrder(SortOrder.asc)
 		.setPager("commentpager")
 		.setPgButtons(true)
-		.setCellEdit(true)
+		.setCellEdit(false)
 		.setNavAdd(false)
 		.setNavEdit(false)
 		.setNavDel(false)

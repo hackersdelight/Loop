@@ -6,7 +6,7 @@
 	function GridLoaded() {
 		var grid = $("#user");
 		//decide by task state if additional option should be added.
-
+		grid.jqGrid('setGridParam', { onSelectRow: function (id) { return false; } });
 		grid.navButtonAdd("#userpager", {
 			caption: "Add a new user",
 			buttonicon: "ui-icon-add",
@@ -62,10 +62,10 @@
 		.setViewRecords(true)
 		.setPager("userpager")
 		.setPgButtons(true)
-		.setCellEdit(true)
+		.setCellEdit(false)
 		.setEditUrl(Url.Action("UserOperation", "User"))
 		.setCellSubmit(CellSubmit.clientArray)
-		.onLoadComplete("GridLoaded();")
+		.setDocumentReadyJavaScript("GridLoaded();")
 		.onDblClickRow("document.location.href = '/Admin/User/EditUser/' + rowid.toString();")
 		.Render()
 )

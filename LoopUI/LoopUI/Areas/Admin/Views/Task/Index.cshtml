@@ -11,8 +11,7 @@
 	</ul>
 }
 <script type="text/javascript">
-	function GridLoaded() 
-	{
+	function GridLoaded() {
 		var grid = $("#task");
 		//decide by task state if additional option should be added.
 
@@ -21,9 +20,13 @@
 		AddPauseOption(grid, iCol);
 		AddPromoteOption(grid, iCol);
 		AddReturnOption(grid, iCol);
+
+		grid.jqGrid('setGridParam', { onSelectRow: function (id) { return false; } });
+
 		grid.navButtonAdd("#taskpager", {
-			caption: "Add a new task",
-			buttonicon: "ui-icon-add",
+			caption: "",
+			title: "Add task",
+			buttonicon: "ui-icon-plusthick",
 			onClickButton: function () {
 				document.location.href = '/Admin/Task/AddTask';
 			},
@@ -94,11 +97,11 @@
 		.setSortOrder(SortOrder.asc)
 		.setPager("taskpager")
 		.setPgButtons(true)
-		.setCellEdit(true)
+		.setCellEdit(false)
 		.setEditUrl(Url.Action("TaskOperation", "Task"))
 		.setCellSubmit(CellSubmit.clientArray)
 		.onDblClickRow("document.location.href = '/Admin/Task/EditTask/' + rowid.toString();")
-		.onLoadComplete("GridLoaded();")
+		.setDocumentReadyJavaScript("GridLoaded();")
 		.Render()
 )
 @Html.HiddenFor(m => m.TaskPriority)
