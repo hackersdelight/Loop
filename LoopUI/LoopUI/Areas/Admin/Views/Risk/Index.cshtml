@@ -37,6 +37,7 @@
 		.setEditOptions("value: $('#RiskType').val()")
 		.setEditRules("required: true")
 		.setEditable(true)
+		.setFormatter(Formatters.select)
 		.setWidth(100))
 		.addColumn(new Column("actions").setLabel("Actions")
 		.setSortable(false)

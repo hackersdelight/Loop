@@ -112,7 +112,6 @@ namespace LoopUI.Helpers
 					{
 							x.Number,
 							x.Title,
-							x.Status.Id.ToString(),
 							x.Prioroty.Id.ToString(),
 							x.Assignment.Id.ToString(),
 							x.IsActive.ToString()
@@ -135,7 +134,7 @@ namespace LoopUI.Helpers
 					cell = new[]
 					{
 							x.Title,
-							x.Type.Title
+							x.Type.Id.ToString()
 					}
 				})
 			};
