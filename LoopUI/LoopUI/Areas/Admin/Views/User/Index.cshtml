@@ -8,8 +8,9 @@
 		//decide by task state if additional option should be added.
 		grid.jqGrid('setGridParam', { onSelectRow: function (id) { return false; } });
 		grid.navButtonAdd("#userpager", {
-			caption: "Add a new user",
-			buttonicon: "ui-icon-add",
+			caption: "",
+			title: "Add task",
+			buttonicon: "ui-icon-plusthick",
 			onClickButton: function () {
 				document.location.href = '/Admin/User/AddUser';
 			},

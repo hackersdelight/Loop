@@ -40,4 +40,15 @@ namespace LoopUI.Models
 			return user;
 		}
 	}
+
+	public class RiskTypeBinder : IModelBinder
+	{
+		public object BindModel(ControllerContext controllerContext,
+			ModelBindingContext bindingContext)
+		{
+			int id = Convert.ToInt32(bindingContext.ValueProvider.GetValue("Type.Id").AttemptedValue);
+			IRiskType riskType = DataStorage.Instance.RiskActions.GetAllRiskTypes().Find(x=>x.Id == id);
+			return riskType;
+		}
+	}
 }

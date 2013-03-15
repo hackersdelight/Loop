@@ -38,6 +38,7 @@ namespace LoopUI
 			ModelBinders.Binders.Add(typeof(ITaskStatus), new TaskStatusBinder());
 			ModelBinders.Binders.Add(typeof(ITaskPriority), new TaskPriorityBinder());
 			ModelBinders.Binders.Add(typeof(IUser), new UserBinder());
+			ModelBinders.Binders.Add(typeof(IRiskType), new RiskTypeBinder());
 			RegisterGlobalFilters(GlobalFilters.Filters);
 			RegisterRoutes(RouteTable.Routes);
 		}

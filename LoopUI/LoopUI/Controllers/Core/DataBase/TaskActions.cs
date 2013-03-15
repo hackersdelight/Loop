@@ -160,17 +160,18 @@ namespace LoopUI.Controllers
 			{
 				connection.OpenConnection();
 				connection.BeginTransaction();
+				DbCommand comments = new DbCommand("DELETE FROM Comments WHERE TaskId = @id;");
+				comments.Parameters = new SqlParameter[1];
+				comments.Parameters[0] = new SqlParameter("id", id);
+				comments.Type = DbCommand.DbCommandType.DELETE;
+				connection.ExecNonQuery(comments);
+
 				DbCommand command = new DbCommand("DELETE FROM Tasks WHERE Id = @id;");
 				command.Parameters = new SqlParameter[1];
 				command.Parameters[0] = new SqlParameter("id", id);
 				command.Type = DbCommand.DbCommandType.DELETE;
 				connection.ExecNonQuery(command);
 
-				DbCommand comments = new DbCommand("DELETE FROM Comments WHERE TaskId = @id;");
-				comments.Parameters = new SqlParameter[1];
-				comments.Parameters[0] = new SqlParameter("id", id);
-				comments.Type = DbCommand.DbCommandType.DELETE;
-				connection.ExecNonQuery(comments);
 				connection.CommitTransaction();
 				if (TasksCollection != null)
 				{
@@ -355,6 +356,23 @@ namespace LoopUI.Controllers
 				connection.CloseConnection();
 			}
 			return result;
+		}
+
+		/// <summary>
+		/// If user is no longer active, tasks that are assigned on him should be reassigned to another person
+		/// connection is opened before method is called
+		/// </summary>
+		/// <param name="currentUserId"></param>
+		/// <param name="targetUserId"></param>
+		internal void ReassignAllTasks(int currentUserId, int targetUserId)
+		{
+			DbCommand command = new DbCommand("UPDATE Tasks SET AssignmentId = @assignmentid WHERE AssignmentId = @assid;");
+			command.Parameters = new SqlParameter[2];
+			command.Parameters[0] = new SqlParameter("assignmentid", targetUserId);
+			command.Parameters[1] = new SqlParameter("assid", currentUserId);
+			command.Type = DbCommand.DbCommandType.UPDATE;
+			connection.ExecNonQuery(command);
+			TasksCollection = null;
 		}
 
 		private ITaskPriority CreateTaskPriorityInstance(DataRow row)

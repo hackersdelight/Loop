@@ -28,13 +28,13 @@ namespace LoopUI.Areas.Admin.Controllers
 			return Json(JSonHelper.GetJSonForRisks(CoreWrapper.Instance.GetAllRisks(), 1, 1, 1), JsonRequestBehavior.AllowGet);
 		}
 
-		public ActionResult RiskOperation(int id, string title, int type, string oper)
+		public ActionResult RiskOperation(int id, string title, int? type, string oper)
 		{
 			if (oper == "edit")
 			{
 				Risk s = riskActions.GetRiskById(id) as Risk;
 				s.Title = title;
-				s.Type = new RiskType() { Id = id };
+				s.Type = new RiskType() { Id = Convert.ToInt32(type) };
 				return EditRisk(s);
 			}
 			else if (oper == "del")
@@ -47,6 +47,7 @@ namespace LoopUI.Areas.Admin.Controllers
 		[HttpGet]
 		public ActionResult AddRisk()
 		{
+			ViewBag.RiskType = CoreWrapper.Instance.GetAllRiskTypes();
 			return View();
 		}
 
@@ -64,6 +65,7 @@ namespace LoopUI.Areas.Admin.Controllers
 		[HttpGet]
 		public ActionResult EditRisk(int id)
 		{
+			ViewBag.RiskType = CoreWrapper.Instance.GetAllRiskTypes();
 			return View(riskActions.GetRiskById(id) as Risk);
 		}
 

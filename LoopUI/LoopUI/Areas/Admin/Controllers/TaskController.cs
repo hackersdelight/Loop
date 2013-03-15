@@ -40,16 +40,16 @@ namespace LoopUI.Areas.Admin.Controllers
 			return Json(JSonHelper.GetJSonForComments(taskActions.GetCommentsListByTaskId(id), 1, 1, 1), JsonRequestBehavior.AllowGet);
 		}
 
-		public ActionResult CommentOperation([Optional]int id, string comment, string oper)
+		public ActionResult CommentOperation(int? id, string comment, string oper)
 		{
 			if (oper == "edit")
 			{
-				Comment c = new Comment(id, comment);
+				Comment c = new Comment(Convert.ToInt32(id), comment);
 				return EditComment(c);
 			}
 			else if (oper == "del")
 			{
-				return DeleteComment(id);
+				return DeleteComment(Convert.ToInt32(id));
 			}
 			else if (oper == "add")
 			{
@@ -58,14 +58,14 @@ namespace LoopUI.Areas.Admin.Controllers
 			else return RedirectToAction("EditTask");
 		}
 
-		public ActionResult TaskOperation(int id, string title, int priority, int assignment, string isactive, string oper)
+		public ActionResult TaskOperation(int id, string title, int? priority, int? assignment, string isactive, string oper)
 		{
 			if (oper == "edit")
 			{
 				Task t = taskActions.GetTaskById(id) as Models.Task;
 				t.Title = title;
-				t.Prioroty =  new TaskPriority() { Id = priority };
-				t.Assignment = new LoopUI.Models.User() { Id = assignment };
+				t.Prioroty =  new TaskPriority() { Id = Convert.ToInt32(priority) };
+				t.Assignment = new LoopUI.Models.User() { Id = Convert.ToInt32(assignment) };
 				return EditTask(t);
 			}
 			else if (oper == "del")
@@ -91,7 +91,7 @@ namespace LoopUI.Areas.Admin.Controllers
 			if (ModelState.IsValid)
 			{
 				taskActions.EditTask(task);
-				return View("Index");
+				return RedirectToAction("Index");
 			}
 			else
 			{

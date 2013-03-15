@@ -99,5 +99,16 @@ namespace LoopUI.Controllers
 			}
 			return new SelectList(result, "Value", "Text");
 		}
+
+		internal SelectList GetAllRiskTypes()
+		{
+			List<SelectListItem> result = new List<SelectListItem>();
+			List<IRiskType> riskTypes = DataStorage.Instance.RiskActions.GetAllRiskTypes();
+			foreach (IRiskType t in riskTypes)
+			{
+				result.Add(new SelectListItem() { Text = t.Title , Value = t.Id.ToString() });
+			}
+			return new SelectList(result, "Value", "Text");
+		}
 	}
 }

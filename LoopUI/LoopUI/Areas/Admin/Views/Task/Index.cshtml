@@ -11,7 +11,7 @@
 	</ul>
 }
 <script type="text/javascript">
-	function GridLoaded() {
+	function GridComplete() {
 		var grid = $("#task");
 		//decide by task state if additional option should be added.
 
@@ -21,6 +21,10 @@
 		AddPromoteOption(grid, iCol);
 		AddReturnOption(grid, iCol);
 
+	}
+
+	function GridLoaded() {
+		var grid = $("#task");
 		grid.jqGrid('setGridParam', { onSelectRow: function (id) { return false; } });
 
 		grid.navButtonAdd("#taskpager", {
@@ -44,7 +48,7 @@
 		.setSortable(true)
 		.setFixed(true)
 		.setAlign(Align.center)
-		.setWidth(70))
+		.setWidth(100))
 		.addColumn(new Column("title").setLabel("Title")
 		.setSortable(true)
 		.setFixed(true)
@@ -58,9 +62,9 @@
 		.setFormatter(Formatters.select)
 		.setAlign(Align.center)
 		.setEditOptions("value: $('#TaskPriority').val()")
-		.setWidth(50))
+		.setWidth(30))
 		.addColumn(new Column("assignment").setLabel("Assignment")
-		.setSortable(true)
+		.setSortable(false)
 		.setEditable(true)
 		.setEditType(EditType.select)
 		.setFormatter(Formatters.select)
@@ -98,10 +102,14 @@
 		.setPager("taskpager")
 		.setPgButtons(true)
 		.setCellEdit(false)
+		.setNavAdd(false)
+		.setNavDel(false)
+		.setNavEdit(false)
 		.setEditUrl(Url.Action("TaskOperation", "Task"))
 		.setCellSubmit(CellSubmit.clientArray)
 		.onDblClickRow("document.location.href = '/Admin/Task/EditTask/' + rowid.toString();")
 		.setDocumentReadyJavaScript("GridLoaded();")
+		.onGridComplete("GridComplete();")
 		.Render()
 )
 @Html.HiddenFor(m => m.TaskPriority)

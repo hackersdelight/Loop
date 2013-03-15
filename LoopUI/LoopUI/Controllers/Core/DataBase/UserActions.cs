@@ -97,6 +97,7 @@ namespace LoopUI.Controllers
 			try
 			{
 				connection.OpenConnection();
+				connection.BeginTransaction();
 				DbCommand command = new DbCommand("DELETE FROM Users WHERE Id = @id;");
 				command.Parameters = new SqlParameter[1];
 				command.Parameters[0] = new SqlParameter("id", id);
@@ -106,9 +107,12 @@ namespace LoopUI.Controllers
 				{
 					UserCollection.Remove(UserCollection.Find(x => x.Id == id));
 				}
+				ReassignTasks(id);
+				connection.CommitTransaction();
 			}
 			catch (Exception e)
 			{
+				connection.RollbackTransaction();
 				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
@@ -123,6 +127,7 @@ namespace LoopUI.Controllers
 			try
 			{
 				connection.OpenConnection();
+				connection.BeginTransaction();
 				DbCommand command = new DbCommand("UPDATE Users SET Login = @login, Password = @password, Name = @name, Surname = @surname, Email = @email, IsActive = @isactive, UserType = @usertype WHERE Id = @id;");
 				command.Parameters = new SqlParameter[8];
 				command.Parameters[0] = new SqlParameter("id", user.Id);
@@ -141,9 +146,15 @@ namespace LoopUI.Controllers
 					UserCollection.Remove(UserCollection.Find(x => x.Id == user.Id));
 					UserCollection.Add(user);
 				}
+				if (!user.IsActive)
+				{
+					ReassignTasks(user.Id);
+				}
+				connection.CommitTransaction();
 			}
 			catch (Exception e)
 			{
+				connection.RollbackTransaction();
 				Logger.Instance.WriteToLog(e.StackTrace);
 				throw;
 			}
@@ -169,6 +180,18 @@ namespace LoopUI.Controllers
 			if (UserCollection == null)
 				GetAllUsers();
 			return UserCollection.Exists(x => x.Login == login);
+		}
+
+		/// <summary>
+		/// If user is no longer active, tasks that are assigned on him should be reassigned to another person
+		/// </summary>
+		/// <param name="userId">int user id</param>
+		private void ReassignTasks(int userId)
+		{
+			//user to reassign
+			IUser user = DataStorage.Instance.UserActions.GetActiveUsers().FindLast(x => x.Id == x.Id);
+			TaskActions tActions = DataStorage.Instance.TaskActions as TaskActions;
+			tActions.ReassignAllTasks(userId, user.Id);
 		}
 
 		private IUser CreateUserModelInstance(DataRow row)
