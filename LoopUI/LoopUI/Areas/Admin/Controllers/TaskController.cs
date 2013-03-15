@@ -29,10 +29,62 @@ namespace LoopUI.Areas.Admin.Controllers
 			return View(model);
 		}
 
-		public ActionResult GetTasks()
+		public ActionResult GetTasks(string sidx, string sord, int page, int rows, bool _search, string searchField, string searchOper, string searchString)
 		{
-			//Json(JSonConverters.GetJsonForUsers(users, page, total, total / rows + 1), JsonRequestBehavior.AllowGet);
-			return Json(JSonHelper.GetJSonForTasks(CoreWrapper.Instance.GetAllTasks(), 1, 1, 1), JsonRequestBehavior.AllowGet);
+			IEnumerable<ITask> tasks;
+			if (_search)
+			{
+				tasks = GetSearchTasks(searchField, searchOper, searchString);
+			}
+			else
+			{
+				tasks = taskActions.GetAllTasks() as IEnumerable<ITask>;
+			}
+			IEnumerable<ITask> tasksList;
+			int total = tasks.Count();
+			if (total <= (page - 1) * rows)
+			{
+				tasksList = tasks;
+			}
+			else
+			{
+				tasksList = tasks.OrderBy(t => t.Id).Skip((page - 1) * rows).Take(rows);
+			}
+			return Json(JSonHelper.GetJSonForTasks(tasksList, page, total, total/rows+1), JsonRequestBehavior.AllowGet);
+		}
+
+		private IEnumerable<ITask> GetSearchTasks(string searchField, string searchOper, string searchString)
+		{
+			IEnumerable<ITask> tasks = taskActions.GetAllTasks() as IEnumerable<ITask>;
+			TaskFields field = (TaskFields)Enum.Parse(typeof(TaskFields), searchField, true);
+			switch (field)
+			{
+				case TaskFields.Actions:
+					{
+						break;
+					}
+				case TaskFields.Active:
+					{
+						break;
+					}
+				case TaskFields.Assignment:
+					{
+						break;
+					}
+				case TaskFields.Number:
+					{
+						break;
+					}
+				case TaskFields.Priority:
+					{
+						break;
+					}
+				case TaskFields.Title:
+					{
+						break;
+					}
+			}
+			return tasks;
 		}
 
 		public ActionResult GetTaskComments(int id)

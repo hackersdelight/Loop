@@ -93,6 +93,15 @@ namespace LoopUI.Models
 			get;
 			set;
 		}
+	}
 
+	internal enum TaskFields
+	{
+		Number,
+		Title,
+		Priority,
+		Assignment,
+		Active,
+		Actions
 	}
 }
