@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BurndownPoint.cs" />
+    <Compile Include="ChangeStateEventArgs.cs" />
+    <Compile Include="ChangeStatusEventArgs.cs" />
+    <Compile Include="ChartPoint.cs" />
     <Compile Include="Interfaces\Enumeration.cs" />
     <Compile Include="Interfaces\IComment.cs" />
     <Compile Include="Interfaces\IRisk.cs" />
@@ -54,6 +58,10 @@
     <Compile Include="Interfaces\IDataProvider.cs" />
     <Compile Include="Interfaces\ITask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SprintCompletedEventArgs.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
