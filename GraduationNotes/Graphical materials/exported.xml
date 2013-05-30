@@ -1,0 +1,83 @@
+﻿<SP5>
+	<Task>
+		<Number>
+			IR-215333
+		</Number>
+		<Title>
+			implement export
+		</Title>
+		<Steps>
+			1. make export btn 2. implement handler
+		</Steps>
+		<Status>
+			Development
+		</Status>
+		<Assignment>
+			<User>
+				<Name>
+					sandra
+				</Name>
+				<Surname>
+					panaryna
+				</Surname>
+				<Type>
+					developer
+				</Type>
+			</User>
+		</Assignment>
+	</Task>
+	<Task>
+		<Number>
+			IR-213444
+		</Number>
+		<Title>
+			implement import
+		</Title>
+		<Steps>
+			1. make import btn 2. implement handler
+		</Steps>
+		<Status>
+			Development
+		</Status>
+		<Assignment>
+			<User>
+				<Name>
+					sandra
+				</Name>
+				<Surname>
+					panaryna
+				</Surname>
+				<Type>
+					developer
+				</Type>
+			</User>
+		</Assignment>
+	</Task>
+	<Task>
+		<Number>
+			IR-121415
+		</Number>
+		<Title>
+			visualize metrics
+		</Title>
+		<Steps>
+			1. make metrics btn 2. implement content
+		</Steps>
+		<Status>
+			Testing
+		</Status>
+		<Assignment>
+			<User>
+				<Name>
+					Olya
+				</Name>
+				<Surname>
+					Matusevich
+				</Surname>
+				<Type>
+					tester
+				</Type>
+			</User>
+		</Assignment>
+	</Task>
+</SP5>
