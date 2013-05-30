@@ -4,28 +4,117 @@
 }
 <script type="text/javascript">
 	$(function () {
-		Morris.Line({
-			element: 'burndown',
-			data: [
-							{ y: '1', a: 100, b: 100 },
-							{ y: '2', a: 90, b: 92 },
-							{ y: '3', a: 80, b: 84 },
-							{ y: '4', a: 70, b: 65 },
-							{ y: '5', a: 60, b: 65 },
-							{ y: '6', a: 50, b: 65 },
-							{ y: '7', a: 40, b: 65 },
-							{ y: '8', a: 30, b: 43 },
-							{ y: '9', a: 20, b: 36 },
-							{ y: '10', a: 10, b: 22 },
-							{ y: '11', a: 0, b: 10 },
-							{ y: '12', a: 0, b: 0 }
-						],
-			xkey: 'y',
-			ykeys: ['a', 'b'],
-			labels: ['Expected', 'Real']
+
+		$(function () {
+			$('#burndown').highcharts({
+				chart: {
+					type: 'line',
+					marginRight: 130,
+					marginBottom: 25
+				},
+				title: {
+					text: 'Burndown',
+					x: -20 //center
+				},
+				subtitle: {
+					text: 'efforts required',
+					x: -20
+				},
+				xAxis: {
+					categories: ['1', '2', '3', '4', '5', '6',
+                    '7', '8', '9', '10', '11', '12']
+				},
+				yAxis: {
+					title: {
+						text: 'Effort'
+					},
+					plotLines: [{
+						value: 0,
+						width: 1,
+						color: '#808080'
+					}]
+				},
+				tooltip: {
+					valueSuffix: ' parrots'
+				},
+				legend: {
+					layout: 'vertical',
+					align: 'right',
+					verticalAlign: 'top',
+					x: 0,
+					y: 100,
+					borderWidth: 0
+				},
+				series: [{
+					name: 'Expected',
+					data: [100.0, 90.0, 80.0, 70.0, 60.0, 40.0, 30.0, 20.0, 10.0, 0.0, 0.0, 0.0]
+				}, {
+					name: 'Real',
+					data: [100.0, 92.0, 84.7, 65.3, 65.0, 60.8, 50.0, 43.1, 36.1, 22.1, 10.6, 0.0]
+				}]
+			});
+		});
+
+		$('#sprints').highcharts({
+			chart: {
+				type: 'bar'
+			},
+			title: {
+				text: 'Sprint efforts statistics'
+			},
+			subtitle: {
+				text: 'Loop UI'
+			},
+			xAxis: {
+				categories: ['Sp1', 'Sp2', 'Sp3', 'Sp4', 'Sp5'],
+				title: {
+					text: null
+				}
+			},
+			yAxis: {
+				min: 0,
+				title: {
+					text: 'Efforts (parrots)',
+					align: 'high'
+				},
+				labels: {
+					overflow: 'justify'
+				}
+			},
+			tooltip: {
+				valueSuffix: ' parrots'
+			},
+			plotOptions: {
+				bar: {
+					dataLabels: {
+						enabled: true
+					}
+				}
+			},
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'top',
+				x: -100,
+				y: 100,
+				floating: true,
+				borderWidth: 1,
+				backgroundColor: '#FFFFFF',
+				shadow: true
+			},
+			credits: {
+				enabled: false
+			},
+			series: [{
+				name: "sprint efforts",
+				data: [38, 45, 55, 43, 39]
+			}]
 		});
 	});
+		
 	
 </script>
-<div id="burndown">
+<div id="sprints" style="min-width: 400px; height: 400px; margin: 0 auto" >
+</div>
+<div id="burndown" style="min-width: 400px; height: 400px; margin: 0 auto">
 </div>
